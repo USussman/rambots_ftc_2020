@@ -1,6 +1,20 @@
+//apply plugin: 'com.android.application'
+
+android {
+
+    defaultConfig {
+        minSdkVersion 21
+        targetSdkVersion 26
+    }
+
+    compileSdkVersion 28
+}
+
 dependencies {
-    implementation project(path: ':OpenCV')
-}//
+    implementation project(':OpenCV')
+}
+
+//
 // build.gradle in TeamCode
 //
 // Most of the definitions for building your module reside in a common, shared

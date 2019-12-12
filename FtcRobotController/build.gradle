@@ -6,7 +6,7 @@ apply plugin: 'com.android.library'
 android {
 
     defaultConfig {
-        minSdkVersion 19
+        minSdkVersion 21
         targetSdkVersion 26
     }
 
@@ -16,6 +16,10 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_7
         targetCompatibility JavaVersion.VERSION_1_7
     }
+}
+
+dependencies {
+    implementation project(path: ':OpenCV')
 }
 
 repositories {
