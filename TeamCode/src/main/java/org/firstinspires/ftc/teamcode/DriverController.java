@@ -7,9 +7,9 @@ import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
-@TeleOp(name="DriverControlledOpMode", group="DriverOpModes")
 
-public class DriverController implements LinearOpMode {
+@TeleOp(name="DriverControlledOpMode", group="DriverOpModes")
+public class DriverController extends LinearOpMode {
     private Servo wrist;
     private Servo elbow;
     private Servo shoulderRotate;
@@ -26,6 +26,7 @@ public class DriverController implements LinearOpMode {
 
     private ElapsedTime runtime = new ElapsedTime();
 
+    @Override
     public void runOpMode() {
         telemetry.addData("Status", "Initialized");
         telemetry.update();
