@@ -23,7 +23,7 @@ public class TestOp extends LinearOpMode {
 
     @Override
     public void runOpMode() {
-        imu = hardwareMap.get(Gyroscope.class, imu);
+        //imu = hardwareMap.get(Gyroscope.class, imu);
 
     }
 }

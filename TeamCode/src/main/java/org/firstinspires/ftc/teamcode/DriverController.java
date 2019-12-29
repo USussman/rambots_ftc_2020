@@ -5,11 +5,10 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
-import com.qualcomm.robotcore.util.Range;
 
 @TeleOp(name="DriverControlledOpMode", group="DriverOpModes")
 
-public class DriverController implements LinearOpMode {
+public class DriverController extends LinearOpMode {
     private Servo wrist;
     private Servo elbow;
     private Servo shoulderRotate;
@@ -41,7 +40,7 @@ public class DriverController implements LinearOpMode {
         elbow  = hardwareMap.get(Servo.class, "elbow");
         shoulderRotate  = hardwareMap.get(Servo.class, "shoulderRotate");
 
-        claw = new Claw(wrist, elbow, shoulderRotate, shoulderElevate);
+        claw = new Claw(wrist, elbow, shoulderRotate, shoulderElevate, telemetry);
         wheels = new Wheels(leftMotor, rightMotor);
         brickLoader = new BrickLoader(brickLoaderMotor);
 
@@ -55,15 +54,19 @@ public class DriverController implements LinearOpMode {
                 brickLoader.setSpeed(gamepad2.left_trigger);
             }
             else{
-                brickLoader.setSpeed(1);
+                brickLoader.setSpeed(gamepad1.left_trigger);
             }
 
-            wheels.drive(gamepad1.left_stick_y);
+
             if((Math.abs(gamepad1.right_stick_x)) > 0.2){
-                wheels.turn(gamepad1.right_stick_x, (gamepad1.right_stick_x>0), Math.abs(gamepad1.right_stick_x)*360);
+                wheels.turn(gamepad1.left_stick_y *(22.5 * Math.PI), (gamepad1.right_stick_x>0), Math.abs(gamepad1.right_stick_x)*360);
+            }
+            else{
+                wheels.drive(gamepad1.left_stick_y *(22.5 * Math.PI));
             }
 
-            claw.move((int)gamepad1.right_stick_y, (int)gamepad1.left_stick_y, gamepad1.left_stick_x*360);
+            claw.move((int)gamepad2.right_stick_y, (int)gamepad2.left_stick_y, (gamepad2.left_stick_x+1)*180);
         }
     }
+
 }

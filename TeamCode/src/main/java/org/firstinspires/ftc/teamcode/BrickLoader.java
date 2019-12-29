@@ -9,7 +9,7 @@ public class BrickLoader {
     public BrickLoader(DcMotor motor) {
         this.motor = motor;
         //right motor on (full power)
-        motor.setDirection(DcMotorSimple.Direction.FORWARD);
+        motor.setDirection(DcMotorSimple.Direction.REVERSE);
         motor.setPower(0);
     }
 
