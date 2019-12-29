@@ -36,8 +36,8 @@ public class Claw {
         int y = (int) Math.sin(shoulderElevate.getTargetPosition()) * r;
         x+=moveX;
         y+=moveY;
-        shoulderElevate.setTargetPosition((int)Math.atan(y/x));
-        elbow.setPosition(Math.acos(x*x+y*y-armA*armA-armB*armB+2*armA*armB));
-        shoulderRotate.setPosition(rotateDegrees);
+        shoulderElevate.setTargetPosition((int)Math.atan(y/x)/(2*Math.PI));
+        elbow.setPosition(Math.acos(x*x+y*y-armA*armA-armB*armB+2*armA*armB)/(2*Math.PI));
+        shoulderRotate.setPosition(rotateDegrees/360);
     }
 }
