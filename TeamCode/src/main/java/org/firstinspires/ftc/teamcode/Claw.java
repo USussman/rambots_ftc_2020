@@ -2,7 +2,6 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
-
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 public class Claw {
@@ -41,7 +40,7 @@ public class Claw {
         int y = (int) Math.sin(shoulderElevate.getTargetPosition()) * r;
         x+=moveX;
         y+=moveY;
-        shoulderElevate.setTargetPosition((int)(Math.atan(y/x)/(2*Math.PI)));
+        shoulderElevate.setTargetPosition((int)((Math.atan(y/x)/(2*Math.PI))*288));
         elbow.setPosition(Math.acos(x*x+y*y-armA*armA-armB*armB+2*armA*armB)/(2*Math.PI));
         shoulderRotate.setPosition(rotateDegrees/360);
     }
