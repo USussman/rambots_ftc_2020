@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -9,9 +10,10 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 @TeleOp(name="DriverControlledOpMode", group="DriverOpModes")
 
 public class DriverController extends LinearOpMode {
-    private Servo wrist;
-    private Servo elbow;
-    private Servo shoulderRotate;
+    private Servo hand;
+    private CRServo wrist;
+    private CRServo elbow;
+    private CRServo shoulderRotate;
     private DcMotor shoulderElevate;
 
     private DcMotor leftMotor;
@@ -40,7 +42,7 @@ public class DriverController extends LinearOpMode {
         elbow  = hardwareMap.get(Servo.class, "elbow");
         shoulderRotate  = hardwareMap.get(Servo.class, "shoulderRotate");
 
-        claw = new Claw(wrist, elbow, shoulderRotate, shoulderElevate, telemetry);
+        claw = new Claw(hand, wrist, elbow, shoulderRotate, shoulderElevate, telemetry);
         wheels = new Wheels(leftMotor, rightMotor);
         brickLoader = new BrickLoader(brickLoaderMotor);
 
