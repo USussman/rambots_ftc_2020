@@ -6,8 +6,8 @@ class EncodedServo implements Runnable{
     private CRServo motor;
     private Compass above;
     private Compass below;
-    private float targetPosition;
-    private float position;
+    private double targetPosition;
+    private double position;
 
     public EncodedServo(CRServo motor, Compass above, Compass below){
         this.motor = motor;
@@ -15,21 +15,21 @@ class EncodedServo implements Runnable{
         this.below = below;
     }
 
-    public void setTargetPosition(float target) {
+    public void setTargetPosition(double target) {
         this.targetPosition = target;
     }
 
-    public float getTargetPosition() {
+    public double getTargetPosition() {
         return targetPosition;
     }
 
-    public float getPosition()  {
+    public double getPosition()  {
         return position;
     }
     @Override
     public void run() {
         //Update position
-        position = (float) (below.angles(below.acceleration())[1] - above.angles(above.acceleration())[1]);
+        position = (double) (below.angles(below.acceleration())[1] - above.angles(above.acceleration())[1]);
 
         if(position > targetPosition)   {
             motor.setPower(-1);

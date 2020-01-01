@@ -16,6 +16,10 @@ public class DriverController extends LinearOpMode {
     private CRServo shoulderRotate;
     private DcMotor shoulderElevate;
 
+    private Compass compass0;
+    private Compass compass1;
+    private Compass compass2;
+
     private DcMotor leftMotor;
     private DcMotor rightMotor;
 
@@ -38,11 +42,11 @@ public class DriverController extends LinearOpMode {
         leftMotor  = hardwareMap.get(DcMotor.class, "leftMotor");
         rightMotor  = hardwareMap.get(DcMotor.class, "rightMotor");
         shoulderElevate  = hardwareMap.get(DcMotor.class, "shoulderElevate");
-        wrist  = hardwareMap.get(Servo.class, "wrist");
-        elbow  = hardwareMap.get(Servo.class, "elbow");
-        shoulderRotate  = hardwareMap.get(Servo.class, "shoulderRotate");
+        wrist  = hardwareMap.get(CRServo.class, "wrist");
+        elbow  = hardwareMap.get(CRServo.class, "elbow");
+        shoulderRotate  = hardwareMap.get(CRServo.class, "shoulderRotate");
 
-        claw = new Claw(hand, wrist, elbow, shoulderRotate, shoulderElevate, telemetry);
+        //claw = new Claw(hand, wrist, elbow, shoulderRotate, shoulderElevate, telemetry, compass0, compass1, compass2);
         wheels = new Wheels(leftMotor, rightMotor);
         brickLoader = new BrickLoader(brickLoaderMotor);
 
@@ -67,7 +71,8 @@ public class DriverController extends LinearOpMode {
                 wheels.drive(gamepad1.left_stick_y *(22.5 * Math.PI));
             }
 
-            claw.move((int)gamepad2.right_stick_y, (int)gamepad2.left_stick_y, (gamepad2.left_stick_x)*360);
+            //claw.move((int)gamepad2.right_stick_y, (int)gamepad2.left_stick_y, (gamepad2.left_stick_x)*360);
+            //claw open and close
         }
     }
 
