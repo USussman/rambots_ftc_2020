@@ -21,6 +21,8 @@ public class Claw {
         this.hand = hand;
         this.wrist = new EncodedServo(wrist, compass2, compass1);
         this.elbow = new EncodedServo(elbow, compass1, compass0);
+        this.wrist.start();
+        this.elbow.start();
         this.shoulderRotate = shoulderRotate;
         this.shoulderElevate = shoulderElevate;
         shoulderElevate.setDirection(DcMotor.Direction.FORWARD); //might need to reverse
@@ -51,10 +53,7 @@ public class Claw {
         wrist.setTargetPosition(-(elbow.getTargetPosition()+shoulderElevate.getTargetPosition()*2*Math.PI));
     }
 
-    public void open(){
-        //hand.setPosition();
-    }
-    public void close(){
-        //hand.setPosition();
+    public void setHandPosition(double position){
+        hand.setPosition(position);
     }
 }

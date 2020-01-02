@@ -48,6 +48,7 @@ public class DriverController extends LinearOpMode {
 
         //claw = new Claw(hand, wrist, elbow, shoulderRotate, shoulderElevate, telemetry, compass0, compass1, compass2);
         wheels = new Wheels(leftMotor, rightMotor);
+        wheels.start();
         brickLoader = new BrickLoader(brickLoaderMotor);
 
         // Wait for the game to start (driver presses PLAY)
@@ -72,7 +73,7 @@ public class DriverController extends LinearOpMode {
             }
 
             //claw.move((int)gamepad2.right_stick_y, (int)gamepad2.left_stick_y, (gamepad2.left_stick_x)*360);
-            //claw open and close
+            //claw.setHandPosition(gamepad2.right_trigger);
         }
     }
 
