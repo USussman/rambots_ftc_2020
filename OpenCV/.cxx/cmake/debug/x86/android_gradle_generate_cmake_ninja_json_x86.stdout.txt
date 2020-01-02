@@ -1,15 +1,15 @@
--- Check for working C compiler: /Users/urielsussman/Library/Android/sdk/ndk-bundle/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang
--- Check for working C compiler: /Users/urielsussman/Library/Android/sdk/ndk-bundle/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang -- works
+-- Check for working C compiler: C:/Users/AS/AppData/Local/Android/Sdk/ndk/20.1.5948944/toolchains/llvm/prebuilt/windows-x86_64/bin/clang.exe
+-- Check for working C compiler: C:/Users/AS/AppData/Local/Android/Sdk/ndk/20.1.5948944/toolchains/llvm/prebuilt/windows-x86_64/bin/clang.exe -- works
 -- Detecting C compiler ABI info
 -- Detecting C compiler ABI info - done
 -- Detecting C compile features
 -- Detecting C compile features - done
--- Check for working CXX compiler: /Users/urielsussman/Library/Android/sdk/ndk-bundle/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang++
--- Check for working CXX compiler: /Users/urielsussman/Library/Android/sdk/ndk-bundle/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang++ -- works
+-- Check for working CXX compiler: C:/Users/AS/AppData/Local/Android/Sdk/ndk/20.1.5948944/toolchains/llvm/prebuilt/windows-x86_64/bin/clang++.exe
+-- Check for working CXX compiler: C:/Users/AS/AppData/Local/Android/Sdk/ndk/20.1.5948944/toolchains/llvm/prebuilt/windows-x86_64/bin/clang++.exe -- works
 -- Detecting CXX compiler ABI info
 -- Detecting CXX compiler ABI info - done
 -- Detecting CXX compile features
 -- Detecting CXX compile features - done
 -- Configuring done
 -- Generating done
--- Build files have been written to: /Users/urielsussman/Downloads/ftc_app-master/OpenCV/.cxx/cmake/debug/x86
+-- Build files have been written to: C:/Users/AS/StudioProjects/rambots_ftc_2020/OpenCV/.cxx/cmake/debug/x86
