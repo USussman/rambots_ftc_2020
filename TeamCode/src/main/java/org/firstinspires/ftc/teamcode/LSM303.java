@@ -12,6 +12,21 @@ import com.qualcomm.robotcore.hardware.configuration.I2cSensor;
 public class LSM303 extends I2cDeviceSynchDevice<I2cDeviceSynch> {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
+    // User Methods
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+
+    public int[] getAccelerometer() {
+        // Get the raw data
+        byte[] raw = getAccelerometerRaw();
+
+        // Shift to create an int
+        int x = ((raw[1] << 8) | raw[0]);
+        int y = ((raw[3] << 8) | raw[2]);
+        int z = ((raw[5] << 8) | raw[4]);
+        return new int[]{x,y,z};
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
     // Raw Register Reads
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -21,8 +36,7 @@ public class LSM303 extends I2cDeviceSynchDevice<I2cDeviceSynch> {
         return readByte(Register.ACCEL_CTRL_REG1_A);
     }
 
-    public int[] getAccelerometer() {
-        // Get the raw data
+    public byte[] getAccelerometerRaw() {
         byte xL = readByte(Register.ACCEL_OUT_X_L_A);
         byte xH = readByte(Register.ACCEL_OUT_X_H_A);
         byte yL = readByte(Register.ACCEL_OUT_Y_L_A);
@@ -30,12 +44,9 @@ public class LSM303 extends I2cDeviceSynchDevice<I2cDeviceSynch> {
         byte zL = readByte(Register.ACCEL_OUT_Z_L_A);
         byte zH = readByte(Register.ACCEL_OUT_Z_H_A);
 
-        // Shift to create an int
-        int x = ((xH << 8) | xL);
-        int y = ((yH << 8) | yL);
-        int z = ((zH << 8) | zL);
-        return new int[]{x,y,z};
+        return new byte[]{xL,xH,yL,yH,zL,zH};
     }
+
     ////////////////////////////////////////////////////////////////////////////////////////////////
     // Read and Write Methods
     ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -100,14 +111,26 @@ public class LSM303 extends I2cDeviceSynchDevice<I2cDeviceSynch> {
     // Construction and Initialization
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
-    public final static I2cAddr ADDRESS_I2C_DEFAULT = I2cAddr.create7bit(0b0011001);
+    public I2cAddr I2cAddress = I2cAddr.create7bit(0b0011001);
 
     public LSM303(I2cDeviceSynch deviceClient)
     {
         super(deviceClient, true);
 
         this.setOptimalReadWindow();
-        this.deviceClient.setI2cAddress(ADDRESS_I2C_DEFAULT);
+        this.deviceClient.setI2cAddress(I2cAddress);
+
+        super.registerArmingStateCallback(false);
+        this.deviceClient.engage();
+    }
+
+    public LSM303(I2cDeviceSynch deviceClient, I2cAddr address)
+    {
+        super(deviceClient, true);
+
+        this.setOptimalReadWindow();
+        I2cAddress = address;
+        this.deviceClient.setI2cAddress(I2cAddress);
 
         super.registerArmingStateCallback(false);
         this.deviceClient.engage();
