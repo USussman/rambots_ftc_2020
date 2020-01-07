@@ -23,8 +23,20 @@ public class Compass extends I2cDeviceSynchDevice<I2cDeviceSynch> {
     }
 
     public double heading() {
-        int[] magnetic = magnetometer();
+        int[] magnetic = getMagnetometerRaw();
         return Math.atan2(magnetic[1], magnetic[0]);
+    }
+
+    public double[] getAccelerometer() {
+        return angles(getAccelerometerRaw());
+    }
+
+    public double[] getMagnetometer() {
+        return angles(getMagnetometerRaw());
+    }
+
+    public double[] getGyroscope() {
+        return angles(getGyroscopeRaw());
     }
 
     //////////////////////////////////////////////////////////////////////////////////////////
@@ -41,32 +53,28 @@ public class Compass extends I2cDeviceSynchDevice<I2cDeviceSynch> {
         double theta = Math.atan2(vector[0], Math.sqrt(Math.pow(vector[1], 2) + Math.pow(vector[2], 2)));
         double psi = Math.atan2(vector[1], Math.sqrt(Math.pow(vector[0], 2) + Math.pow(vector[2], 2)));
         double phi = Math.atan2(Math.sqrt(Math.pow(vector[0], 2) + Math.pow(vector[1], 2)), vector[2]);
-        double[] temp = {theta, psi, phi};
-        return temp;
+        return new double[] {theta, psi, phi};
     }
 
-    public int[] acceleration() {
+    public int[] getAccelerometerRaw() {
         int x = combineRead(Register.ACCEL_OFFSET_X_MSB_ADDR, Register.ACCEL_OFFSET_X_LSB_ADDR);
         int y = combineRead(Register.ACCEL_OFFSET_Y_MSB_ADDR, Register.ACCEL_OFFSET_Y_LSB_ADDR);
         int z = combineRead(Register.ACCEL_OFFSET_Z_MSB_ADDR, Register.ACCEL_OFFSET_Z_LSB_ADDR);
-        int[] temp = {x,y,z};
-        return temp;
+        return new int[] {x,y,z};
     }
 
-    public int[] magnetometer() {
+    public int[] getMagnetometerRaw() {
         int x = combineRead(Register.MAG_OFFSET_X_MSB_ADDR, Register.MAG_OFFSET_X_LSB_ADDR);
         int y = combineRead(Register.MAG_OFFSET_Y_MSB_ADDR, Register.MAG_OFFSET_Y_LSB_ADDR);
         int z = combineRead(Register.MAG_OFFSET_Z_MSB_ADDR, Register.MAG_OFFSET_Z_LSB_ADDR);
-        int[] temp = {x,y,z};
-        return temp;
+        return new int[] {x,y,z};
     }
 
-    public int[] gyroscope() {
+    public int[] getGyroscopeRaw() {
         int x = combineRead(Register.GYRO_OFFSET_X_MSB_ADDR, Register.GYRO_OFFSET_X_LSB_ADDR);
         int y = combineRead(Register.GYRO_OFFSET_Y_MSB_ADDR, Register.GYRO_OFFSET_Y_LSB_ADDR);
         int z = combineRead(Register.GYRO_OFFSET_Z_MSB_ADDR, Register.GYRO_OFFSET_Z_LSB_ADDR);
-        int[] temp = {x,y,z};
-        return temp;
+        return new int[] {x,y,z};
     }
 
     //////////////////////////////////////////////////////////////////////////////////////////
@@ -302,7 +310,7 @@ public class Compass extends I2cDeviceSynchDevice<I2cDeviceSynch> {
         super.registerArmingStateCallback(false);
         this.deviceClient.engage();
 
-        int[] acceleration = acceleration();
+        int[] acceleration = getAccelerometerRaw();
         this.theta = Math.atan2(acceleration[0],
                 Math.sqrt(acceleration[1]*acceleration[1] + acceleration[2]*acceleration[2]));
         this.psi = Math.atan2(acceleration[1],
