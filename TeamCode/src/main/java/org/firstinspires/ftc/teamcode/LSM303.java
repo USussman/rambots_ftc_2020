@@ -15,9 +15,38 @@ public class LSM303 extends I2cDeviceSynchDevice<I2cDeviceSynch> {
     // User Methods
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
-    public int[] getAccelerometer() {
+    public double[] getAccelerometer() {
         // Get the raw data
-        byte[] raw = getAccelerometerRaw();
+        return angles(getAccelerometerRaw());
+
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    // Raw Register Reads
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+
+    private static double[] angles(int[] vector) {
+        double theta = Math.atan2(vector[0], Math.sqrt(Math.pow(vector[1], 2) + Math.pow(vector[2], 2)));
+        double psi = Math.atan2(vector[1], Math.sqrt(Math.pow(vector[0], 2) + Math.pow(vector[2], 2)));
+        double phi = Math.atan2(Math.sqrt(Math.pow(vector[0], 2) + Math.pow(vector[1], 2)), vector[2]);
+        return new double[] {theta, psi, phi};
+    }
+
+    private byte getCTRL_REG1_A()
+    {
+        // Method to test if everything is working. Should return 0b00000111 (7)
+        return readByte(Register.ACCEL_CTRL_REG1_A);
+    }
+
+    private int[] getAccelerometerRaw() {
+        byte xL = readByte(Register.ACCEL_OUT_X_L_A);
+        byte xH = readByte(Register.ACCEL_OUT_X_H_A);
+        byte yL = readByte(Register.ACCEL_OUT_Y_L_A);
+        byte yH = readByte(Register.ACCEL_OUT_Y_H_A);
+        byte zL = readByte(Register.ACCEL_OUT_Z_L_A);
+        byte zH = readByte(Register.ACCEL_OUT_Z_H_A);
+
+        byte[]raw = {xL,xH,yL,yH,zL,zH};
 
         // Shift to create an int
         int x = ((raw[1] << 8) | raw[0]);
@@ -27,36 +56,15 @@ public class LSM303 extends I2cDeviceSynchDevice<I2cDeviceSynch> {
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
-    // Raw Register Reads
-    ////////////////////////////////////////////////////////////////////////////////////////////////
-
-    public byte getCTRL_REG1_A()
-    {
-        // Method to test if everything is working. Should return 0b00000111 (7)
-        return readByte(Register.ACCEL_CTRL_REG1_A);
-    }
-
-    public byte[] getAccelerometerRaw() {
-        byte xL = readByte(Register.ACCEL_OUT_X_L_A);
-        byte xH = readByte(Register.ACCEL_OUT_X_H_A);
-        byte yL = readByte(Register.ACCEL_OUT_Y_L_A);
-        byte yH = readByte(Register.ACCEL_OUT_Y_H_A);
-        byte zL = readByte(Register.ACCEL_OUT_Z_L_A);
-        byte zH = readByte(Register.ACCEL_OUT_Z_H_A);
-
-        return new byte[]{xL,xH,yL,yH,zL,zH};
-    }
-
-    ////////////////////////////////////////////////////////////////////////////////////////////////
     // Read and Write Methods
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
-    protected void writeByte(final Register reg, byte value)
+    private void writeByte(final Register reg, byte value)
     {
         deviceClient.write8(reg.bVal,value);
     }
 
-    protected byte readByte(Register reg)
+    private byte readByte(Register reg)
     {
         return deviceClient.read8(reg.bVal);
     }
@@ -111,7 +119,7 @@ public class LSM303 extends I2cDeviceSynchDevice<I2cDeviceSynch> {
     // Construction and Initialization
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
-    public I2cAddr I2cAddress = I2cAddr.create7bit(0b0011001);
+    private final I2cAddr I2cAddress = I2cAddr.create7bit(0x19);
 
     public LSM303(I2cDeviceSynch deviceClient)
     {
@@ -124,19 +132,7 @@ public class LSM303 extends I2cDeviceSynchDevice<I2cDeviceSynch> {
         this.deviceClient.engage();
     }
 
-    public LSM303(I2cDeviceSynch deviceClient, I2cAddr address)
-    {
-        super(deviceClient, true);
-
-        this.setOptimalReadWindow();
-        I2cAddress = address;
-        this.deviceClient.setI2cAddress(I2cAddress);
-
-        super.registerArmingStateCallback(false);
-        this.deviceClient.engage();
-    }
-
-    protected void setOptimalReadWindow() {
+    private void setOptimalReadWindow() {
         // Sensor registers are read repeatedly and stored in a register. This method specifies the
         // registers and repeat read mode
         I2cDeviceSynch.ReadWindow readWindow = new I2cDeviceSynch.ReadWindow(
@@ -149,7 +145,7 @@ public class LSM303 extends I2cDeviceSynchDevice<I2cDeviceSynch> {
     @Override
     protected synchronized boolean doInitialize()
     {
-        return true;
+        return (getCTRL_REG1_A() == 0b00000111);
     }
 
     @Override
