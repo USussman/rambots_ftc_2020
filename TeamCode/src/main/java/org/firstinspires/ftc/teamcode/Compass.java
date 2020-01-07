@@ -14,6 +14,7 @@ public class Compass extends I2cDeviceSynchDevice<I2cDeviceSynch> {
 
     public void setMode(Mode mode) {
         int _mode = mode.bVal;
+        this.mode = mode;
         deviceClient.write8(Register.BNO055_OPR_MODE_ADDR.bVal, _mode);
     }
 
@@ -21,9 +22,52 @@ public class Compass extends I2cDeviceSynchDevice<I2cDeviceSynch> {
         deviceClient.write8(Register.BNO055_PWR_MODE_ADDR.bVal, Power.NORMAL.bVal);
     }
 
+    public double heading() {
+        int[] magnetic = magnetometer();
+        return Math.atan2(magnetic[1], magnetic[0]);
+    }
+
     //////////////////////////////////////////////////////////////////////////////////////////
     // Raw Register Reads
     //////////////////////////////////////////////////////////////////////////////////////////
+
+    int combineRead(Register msb, Register lsb) {
+        byte MSB = deviceClient.read8(msb.bVal);
+        byte LSB = deviceClient.read8(lsb.bVal);
+        return ((MSB << 8) | LSB);
+    }
+
+    public double[] angles(int[] vector) {
+        double theta = Math.atan2(vector[0], Math.sqrt(Math.pow(vector[1], 2) + Math.pow(vector[2], 2)));
+        double psi = Math.atan2(vector[1], Math.sqrt(Math.pow(vector[0], 2) + Math.pow(vector[2], 2)));
+        double phi = Math.atan2(Math.sqrt(Math.pow(vector[0], 2) + Math.pow(vector[1], 2)), vector[2]);
+        double[] temp = {theta, psi, phi};
+        return temp;
+    }
+
+    public int[] acceleration() {
+        int x = combineRead(Register.ACCEL_OFFSET_X_MSB_ADDR, Register.ACCEL_OFFSET_X_LSB_ADDR);
+        int y = combineRead(Register.ACCEL_OFFSET_Y_MSB_ADDR, Register.ACCEL_OFFSET_Y_LSB_ADDR);
+        int z = combineRead(Register.ACCEL_OFFSET_Z_MSB_ADDR, Register.ACCEL_OFFSET_Z_LSB_ADDR);
+        int[] temp = {x,y,z};
+        return temp;
+    }
+
+    public int[] magnetometer() {
+        int x = combineRead(Register.MAG_OFFSET_X_MSB_ADDR, Register.MAG_OFFSET_X_LSB_ADDR);
+        int y = combineRead(Register.MAG_OFFSET_Y_MSB_ADDR, Register.MAG_OFFSET_Y_LSB_ADDR);
+        int z = combineRead(Register.MAG_OFFSET_Z_MSB_ADDR, Register.MAG_OFFSET_Z_LSB_ADDR);
+        int[] temp = {x,y,z};
+        return temp;
+    }
+
+    public int[] gyroscope() {
+        int x = combineRead(Register.GYRO_OFFSET_X_MSB_ADDR, Register.GYRO_OFFSET_X_LSB_ADDR);
+        int y = combineRead(Register.GYRO_OFFSET_Y_MSB_ADDR, Register.GYRO_OFFSET_Y_LSB_ADDR);
+        int z = combineRead(Register.GYRO_OFFSET_Z_MSB_ADDR, Register.GYRO_OFFSET_Z_LSB_ADDR);
+        int[] temp = {x,y,z};
+        return temp;
+    }
 
     //////////////////////////////////////////////////////////////////////////////////////////
     // Registers and Config Settings
@@ -245,6 +289,8 @@ public class Compass extends I2cDeviceSynchDevice<I2cDeviceSynch> {
     // Construction and Initialization
     //////////////////////////////////////////////////////////////////////////////////////////
     public final static I2cAddr ADDRESS_I2C_DEFAULT = I2cAddr.create7bit(0x28);
+    public double theta, psi;
+    public Mode mode;
 
     public Compass(I2cDeviceSynch deviceClient) {
 
@@ -255,6 +301,14 @@ public class Compass extends I2cDeviceSynchDevice<I2cDeviceSynch> {
 
         super.registerArmingStateCallback(false);
         this.deviceClient.engage();
+
+        int[] acceleration = acceleration();
+        this.theta = Math.atan2(acceleration[0],
+                Math.sqrt(acceleration[1]*acceleration[1] + acceleration[2]*acceleration[2]));
+        this.psi = Math.atan2(acceleration[1],
+                Math.sqrt(acceleration[0]*acceleration[0] + acceleration[2]*acceleration[2]));
+
+        setMode(Mode.ACCMAG_MODE);
     }
 
     protected void setOptimalReadWindow() {
