@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -9,10 +10,15 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 @TeleOp(name="DriverControlledOpMode", group="DriverOpModes")
 
 public class DriverController extends LinearOpMode {
-    private Servo wrist;
-    private Servo elbow;
-    private Servo shoulderRotate;
+    private Servo hand;
+    private CRServo wrist;
+    private CRServo elbow;
+    private CRServo shoulderRotate;
     private DcMotor shoulderElevate;
+
+    private Compass compass0;
+    private Compass compass1;
+    private Compass compass2;
 
     private DcMotor leftMotor;
     private DcMotor rightMotor;
@@ -36,12 +42,13 @@ public class DriverController extends LinearOpMode {
         leftMotor  = hardwareMap.get(DcMotor.class, "leftMotor");
         rightMotor  = hardwareMap.get(DcMotor.class, "rightMotor");
         shoulderElevate  = hardwareMap.get(DcMotor.class, "shoulderElevate");
-        wrist  = hardwareMap.get(Servo.class, "wrist");
-        elbow  = hardwareMap.get(Servo.class, "elbow");
-        shoulderRotate  = hardwareMap.get(Servo.class, "shoulderRotate");
+        wrist  = hardwareMap.get(CRServo.class, "wrist");
+        elbow  = hardwareMap.get(CRServo.class, "elbow");
+        shoulderRotate  = hardwareMap.get(CRServo.class, "shoulderRotate");
 
-        claw = new Claw(wrist, elbow, shoulderRotate, shoulderElevate, telemetry);
+        //claw = new Claw(hand, wrist, elbow, shoulderRotate, shoulderElevate, telemetry, compass0, compass1, compass2);
         wheels = new Wheels(leftMotor, rightMotor);
+        wheels.start();
         brickLoader = new BrickLoader(brickLoaderMotor);
 
         // Wait for the game to start (driver presses PLAY)
@@ -65,7 +72,8 @@ public class DriverController extends LinearOpMode {
                 wheels.drive(gamepad1.left_stick_y *(22.5 * Math.PI));
             }
 
-            claw.move((int)gamepad2.right_stick_y, (int)gamepad2.left_stick_y, (gamepad2.left_stick_x)*360);
+            //claw.move((int)gamepad2.right_stick_y, (int)gamepad2.left_stick_y, (gamepad2.left_stick_x)*360);
+            //claw.setHandPosition(gamepad2.right_trigger);
         }
     }
 

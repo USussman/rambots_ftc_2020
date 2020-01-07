@@ -1,28 +1,35 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.hardware.CRServo;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 public class Claw {
 
-    private Servo wrist;
-    private Servo elbow;
-    private Servo shoulderRotate;
+    private Servo hand;
+    private EncodedServo wrist;
+    private EncodedServo elbow;
+    private CRServo shoulderRotate;
     private DcMotor shoulderElevate;
     private static final int armA = 420;//mm
     private static final int armB = 225;//mm
     public Telemetry telemetry;
 
-    public Claw(Servo wrist, Servo elbow, Servo shoulderRotate, DcMotor shoulderElevate, Telemetry telemetry){
-        this.wrist = wrist;
-        this.elbow = elbow;
+    public Claw(Servo hand, CRServo wrist, CRServo elbow, CRServo shoulderRotate, DcMotor shoulderElevate, Telemetry telemetry, Compass compass0, Compass compass1, Compass compass2){
+        this.hand = hand;
+        this.wrist = new EncodedServo(wrist, compass2, compass1);
+        this.elbow = new EncodedServo(elbow, compass1, compass0);
+        this.wrist.start();
+        this.elbow.start();
         this.shoulderRotate = shoulderRotate;
         this.shoulderElevate = shoulderElevate;
         shoulderElevate.setDirection(DcMotor.Direction.FORWARD); //might need to reverse
-        wrist.setPosition(0);
-        elbow.setPosition(0);
-        shoulderRotate.setPosition(0);
+        this.wrist.setTargetPosition(0);
+        this.elbow.setTargetPosition(0);
+        shoulderRotate.setDirection(DcMotorSimple.Direction.FORWARD);
+        shoulderRotate.setPower(0);
         shoulderElevate.setTargetPosition(0);
         shoulderElevate.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         this.telemetry = telemetry;
@@ -32,16 +39,21 @@ public class Claw {
      *
      * @param moveX in mm
      * @param moveY in mm
-     * @param rotateDegrees between -1 and 1
+     * @param rotateSpeed between -1 and 1
      */
-    public void move(int moveX, int moveY, double rotateDegrees){
+    public void move(int moveX, int moveY, double rotateSpeed){
         int r = armA * armA + armB * armB - 2 * armA * armB * (int) Math.cos(elbow.getPosition());
-        int x = (int) Math.cos(shoulderElevate.getTargetPosition()) * r;
-        int y = (int) Math.sin(shoulderElevate.getTargetPosition()) * r;
+        int x = (int) Math.cos(shoulderElevate.getCurrentPosition()) * r;
+        int y = (int) Math.sin(shoulderElevate.getCurrentPosition()) * r;
         x+=moveX;
         y+=moveY;
         shoulderElevate.setTargetPosition((int)((Math.atan(y/x)/(2*Math.PI))*288));
-        elbow.setPosition(Math.acos(x*x+y*y-armA*armA-armB*armB+2*armA*armB)/(2*Math.PI));
-        shoulderRotate.setPosition(rotateDegrees/360);
+        elbow.setTargetPosition(Math.acos(x*x+y*y-armA*armA-armB*armB+2*armA*armB));
+        shoulderRotate.setPower(rotateSpeed);
+        wrist.setTargetPosition(-(elbow.getTargetPosition()+shoulderElevate.getTargetPosition()*2*Math.PI));
+    }
+
+    public void setHandPosition(double position){
+        hand.setPosition(position);
     }
 }
