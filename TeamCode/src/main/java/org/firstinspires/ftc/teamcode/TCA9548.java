@@ -5,7 +5,7 @@ import com.qualcomm.robotcore.hardware.I2cDeviceSynch;
 import com.qualcomm.robotcore.hardware.I2cDeviceSynchDevice;
 import com.qualcomm.robotcore.hardware.configuration.I2cSensor;
 
-@I2cSensor(name = "TCA9548 I2C Multiplexor", description = "I2C Multiplexor from Adafruit", xmlTag = "TCA9548")
+@I2cSensor(name = "TCA9548 I2C Multiplexer", description = "I2C Multiplexer from Adafruit", xmlTag = "TCA9548")
 public class TCA9548 extends I2cDeviceSynchDevice<I2cDeviceSynch> {
     byte read8(byte channel, byte register) {
         setChannel(channel);
@@ -44,7 +44,7 @@ public class TCA9548 extends I2cDeviceSynchDevice<I2cDeviceSynch> {
 
     @Override
     public String getDeviceName() {
-        return "Adafruit TCA9548 I2C Multiplexor";
+        return "Adafruit TCA9548 I2C Multiplexer";
     }
 
     private I2cAddr ADDRESS_I2C_DEFAULT = I2cAddr.create7bit(0x70);
