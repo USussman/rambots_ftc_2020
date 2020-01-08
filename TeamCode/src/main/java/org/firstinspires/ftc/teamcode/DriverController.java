@@ -16,9 +16,10 @@ public class DriverController extends LinearOpMode {
     private CRServo shoulderRotate;
     private DcMotor shoulderElevate;
 
-    private Compass compass0;
-    private Compass compass1;
-    private Compass compass2;
+    private TCA9548 multiplexer;
+    private LSM303a compass0;
+    private LSM303a compass1;
+    private LSM303a compass2;
 
     private DcMotor leftMotor;
     private DcMotor rightMotor;
@@ -45,6 +46,11 @@ public class DriverController extends LinearOpMode {
         wrist  = hardwareMap.get(CRServo.class, "wrist");
         elbow  = hardwareMap.get(CRServo.class, "elbow");
         shoulderRotate  = hardwareMap.get(CRServo.class, "shoulderRotate");
+        multiplexer = hardwareMap.get(TCA9548.class, "multiplexer");
+
+        compass0 = new LSM303a(multiplexer, (byte) 0);
+        compass1 = new LSM303a(multiplexer, (byte) 1);
+        compass2 = new LSM303a(multiplexer, (byte) 2);
 
         //claw = new Claw(hand, wrist, elbow, shoulderRotate, shoulderElevate, telemetry, compass0, compass1, compass2);
         wheels = new Wheels(leftMotor, rightMotor);

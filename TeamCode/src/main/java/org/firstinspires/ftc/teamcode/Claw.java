@@ -17,7 +17,7 @@ public class Claw {
     private static final int armB = 225;//mm
     public Telemetry telemetry;
 
-    public Claw(Servo hand, CRServo wrist, CRServo elbow, CRServo shoulderRotate, DcMotor shoulderElevate, Telemetry telemetry, Compass compass0, Compass compass1, Compass compass2){
+    public Claw(Servo hand, CRServo wrist, CRServo elbow, CRServo shoulderRotate, DcMotor shoulderElevate, Telemetry telemetry, LSM303a compass0, LSM303a compass1, LSM303a compass2){
         this.hand = hand;
         this.wrist = new EncodedServo(wrist, compass2, compass1);
         this.elbow = new EncodedServo(elbow, compass1, compass0);
