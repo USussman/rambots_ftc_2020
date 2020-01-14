@@ -1,15 +1,15 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.robotcore.hardware.HardwareDevice;
 import com.qualcomm.robotcore.hardware.I2cAddr;
 import com.qualcomm.robotcore.hardware.I2cDeviceSynch;
-import com.qualcomm.robotcore.hardware.I2cDeviceSynchDevice;
 import com.qualcomm.robotcore.hardware.configuration.I2cSensor;
 
 @SuppressWarnings({"unused"})
 
 // While LSM303 has a compass, only the Accelerometer was implemented here.
 @I2cSensor(name = "LSM303 Accelerometer", description = "Accelerometer from Adafruit", xmlTag = "LSM303")
-public class LSM303 extends I2cDeviceSynchDevice<I2cDeviceSynch> {
+public class LSM303a {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
     // User Methods
@@ -19,6 +19,18 @@ public class LSM303 extends I2cDeviceSynchDevice<I2cDeviceSynch> {
         // Get the raw data
         return angles(getAccelerometerRaw());
 
+    }
+
+    public I2cAddr getI2cAddress() {
+        return I2cAddress;
+    }
+
+    public byte getChannel() {
+        return channel;
+    }
+
+    public TCA9548 getController() {
+        return controller;
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -61,12 +73,12 @@ public class LSM303 extends I2cDeviceSynchDevice<I2cDeviceSynch> {
 
     private void writeByte(final Register reg, byte value)
     {
-        deviceClient.write8(reg.bVal,value);
+        controller.write8(this.channel, (byte) reg.bVal, value);
     }
 
     private byte readByte(Register reg)
     {
-        return deviceClient.read8(reg.bVal);
+        return controller.read8(this.channel, (byte) reg.bVal);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -119,44 +131,30 @@ public class LSM303 extends I2cDeviceSynchDevice<I2cDeviceSynch> {
     // Construction and Initialization
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
-    private final I2cAddr I2cAddress = I2cAddr.create7bit(0x19);
+    private final I2cAddr I2cAddress = I2cAddr.create7bit(0x70);
+    private final TCA9548 controller;
+    private final byte channel;
+    private final I2cDeviceSynch deviceClient;
 
-    public LSM303(I2cDeviceSynch deviceClient)
+    public LSM303a(TCA9548 controller, byte channel)
     {
-        super(deviceClient, true);
-
-        this.setOptimalReadWindow();
-        this.deviceClient.setI2cAddress(I2cAddress);
-
-        super.registerArmingStateCallback(false);
-        this.deviceClient.engage();
+        this.controller = controller;
+        this.channel = channel;
+        this.deviceClient = controller.getDeviceClient();
     }
 
-    private void setOptimalReadWindow() {
-        // Sensor registers are read repeatedly and stored in a register. This method specifies the
-        // registers and repeat read mode
-        I2cDeviceSynch.ReadWindow readWindow = new I2cDeviceSynch.ReadWindow(
-                Register.FIRST.bVal,
-                Register.LAST.bVal - Register.FIRST.bVal + 1,
-                I2cDeviceSynch.ReadMode.REPEAT);
-        this.deviceClient.setReadWindow(readWindow);
-    }
-
-    @Override
     protected synchronized boolean doInitialize()
     {
-        return (getCTRL_REG1_A() == 0b00000111);
+        return (this.getCTRL_REG1_A() == 0x7);
     }
 
-    @Override
     public String getDeviceName()
     {
         return "Adafruit LSM303 Accelerometer";
     }
 
-    @Override
-    public Manufacturer getManufacturer()
+    public HardwareDevice.Manufacturer getManufacturer()
     {
-        return Manufacturer.Adafruit;
+        return HardwareDevice.Manufacturer.Adafruit;
     }
 }

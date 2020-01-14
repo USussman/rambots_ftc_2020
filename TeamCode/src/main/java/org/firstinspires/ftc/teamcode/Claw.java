@@ -17,10 +17,12 @@ public class Claw {
     private static final int armB = 225;//mm
     public Telemetry telemetry;
 
-    public Claw(Servo hand, CRServo wrist, CRServo elbow, CRServo shoulderRotate, DcMotor shoulderElevate, Telemetry telemetry, Compass compass0, Compass compass1, Compass compass2){
+    public Claw(Servo hand, CRServo wrist, CRServo elbow, CRServo shoulderRotate, DcMotor shoulderElevate, Telemetry telemetry, LSM303a compass0, LSM303a compass1, LSM303a compass2){
         this.hand = hand;
         this.wrist = new EncodedServo(wrist, compass2, compass1);
         this.elbow = new EncodedServo(elbow, compass1, compass0);
+        this.wrist.start();
+        this.elbow.start();
         this.shoulderRotate = shoulderRotate;
         this.shoulderElevate = shoulderElevate;
         shoulderElevate.setDirection(DcMotor.Direction.FORWARD); //might need to reverse
@@ -51,10 +53,7 @@ public class Claw {
         wrist.setTargetPosition(-(elbow.getTargetPosition()+shoulderElevate.getTargetPosition()*2*Math.PI));
     }
 
-    public void open(){
-        //hand.setPosition();
-    }
-    public void close(){
-        //hand.setPosition();
+    public void setHandPosition(double position){
+        hand.setPosition(position);
     }
 }
