@@ -20,6 +20,14 @@ public class TCA9548 extends I2cDeviceSynchDevice<I2cDeviceSynch> {
         setStandby();
     }
 
+    byte read(byte register) {
+        return deviceClient.read8(register);
+    }
+
+    void write(byte register, byte data) {
+        deviceClient.write8(register, data);
+    }
+
     private void setChannel(int channel) {
         if (channel > 7) return;
 
