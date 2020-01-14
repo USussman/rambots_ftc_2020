@@ -26,3 +26,5 @@ build/
 
 *ASUS_PC_01*
 
+# Open CV build files
+.cxx/
