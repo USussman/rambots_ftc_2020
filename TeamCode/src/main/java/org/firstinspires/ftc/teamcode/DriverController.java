@@ -11,8 +11,8 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 public class DriverController extends LinearOpMode {
     private Servo hand;
-    private CRServo wrist;
-    private CRServo elbow;
+    private CRServo wristServo;
+    private CRServo elbowServo;
     private CRServo shoulderRotate;
     private DcMotor shoulderElevate;
 
@@ -30,6 +30,9 @@ public class DriverController extends LinearOpMode {
     private Wheels wheels;
     private BrickLoader brickLoader;
 
+    private EncodedServo wrist;
+    private EncodedServo elbow;
+
     private ElapsedTime runtime = new ElapsedTime();
 
     public void runOpMode() {
@@ -43,8 +46,8 @@ public class DriverController extends LinearOpMode {
         leftMotor  = hardwareMap.get(DcMotor.class, "leftMotor");
         rightMotor  = hardwareMap.get(DcMotor.class, "rightMotor");
         shoulderElevate  = hardwareMap.get(DcMotor.class, "shoulderElevate");
-        wrist  = hardwareMap.get(CRServo.class, "wrist");
-        elbow  = hardwareMap.get(CRServo.class, "elbow");
+        wristServo  = hardwareMap.get(CRServo.class, "wrist");
+        elbowServo  = hardwareMap.get(CRServo.class, "elbow");
         shoulderRotate  = hardwareMap.get(CRServo.class, "shoulderRotate");
         multiplexer = hardwareMap.get(TCA9548.class, "multiplexer");
 
@@ -52,7 +55,10 @@ public class DriverController extends LinearOpMode {
         compass1 = new LSM303a(multiplexer, (byte) 1);
         compass2 = new LSM303a(multiplexer, (byte) 2);
 
-        //claw = new Claw(hand, wrist, elbow, shoulderRotate, shoulderElevate, telemetry, compass0, compass1, compass2);
+        wrist = new EncodedServo(wristServo, compass2, compass1);
+        elbow = new EncodedServo(elbowServo, compass1, compass0);
+
+//        claw = new Claw(hand, wrist, elbow, shoulderRotate, shoulderElevate, telemetry);
         wheels = new Wheels(leftMotor, rightMotor);
         wheels.start();
         brickLoader = new BrickLoader(brickLoaderMotor);
