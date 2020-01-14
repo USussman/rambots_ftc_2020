@@ -17,10 +17,10 @@ public class Claw {
     private static final int armB = 225;//mm
     public Telemetry telemetry;
 
-    public Claw(Servo hand, CRServo wrist, CRServo elbow, CRServo shoulderRotate, DcMotor shoulderElevate, Telemetry telemetry, LSM303a compass0, LSM303a compass1, LSM303a compass2){
+    public Claw(Servo hand, EncodedServo wrist, EncodedServo elbow, CRServo shoulderRotate, DcMotor shoulderElevate, Telemetry telemetry){
         this.hand = hand;
-        this.wrist = new EncodedServo(wrist, compass2, compass1);
-        this.elbow = new EncodedServo(elbow, compass1, compass0);
+        this.wrist = wrist;
+        this.elbow = elbow;
         this.wrist.start();
         this.elbow.start();
         this.shoulderRotate = shoulderRotate;
