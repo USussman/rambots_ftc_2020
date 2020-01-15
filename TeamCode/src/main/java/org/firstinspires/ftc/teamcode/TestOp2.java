@@ -7,10 +7,15 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 public class TestOp2 extends LinearOpMode {
 
     MultiplexAccelerometer multiplexAccelerometer;
+    int[] ports = {0, 3};
 
     @Override
     public void runOpMode() {
         telemetry.addLine("Initializing");
+        int milliSeconds = 48;
+        multiplexAccelerometer = new MultiplexAccelerometer(hardwareMap, "mux", "ada",
+                ports, milliSeconds,
+                MultiplexAccelerometer.SENSITIVITY_4G);
         multiplexAccelerometer = hardwareMap.get(MultiplexAccelerometer.class, "multiplexer");
         telemetry.addData("Initialized", true);
         telemetry.update();
