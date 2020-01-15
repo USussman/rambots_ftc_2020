@@ -27,6 +27,7 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.I2cAddr;
 import com.qualcomm.robotcore.hardware.I2cDevice;
+import com.qualcomm.robotcore.hardware.I2cDeviceImpl;
 import com.qualcomm.robotcore.hardware.I2cDeviceSynch;
 import com.qualcomm.robotcore.hardware.I2cDeviceSynchImpl;
 
@@ -135,7 +136,7 @@ public class MultiplexAccelerometer {
                                 int gain) {
         sensorPorts = ports;
 
-        mux = hardwareMap.i2cDevice.get(muxName);
+        mux = hardwareMap.get(I2cDeviceImpl.class, muxName);
         muxReader = new I2cDeviceSynchImpl(mux, MUX_ADDRESS, false);
         muxReader.engage();
 
