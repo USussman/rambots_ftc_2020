@@ -1,0 +1,74 @@
+{
+  "variant": {
+    "module": {
+      "rootBuildGradleFolder": "C:\\Users\\Yaakov\\StudioProjects\\rambots_ftc_2020(1)",
+      "sdkFolder": "C:\\Users\\Yaakov\\AppData\\Local\\Android\\Sdk",
+      "isNativeCompilerSettingsCacheEnabled": false,
+      "isBuildOnlyTargetAbiEnabled": true,
+      "splitsAbiFilterSet": [],
+      "intermediatesFolder": "C:\\Users\\Yaakov\\StudioProjects\\rambots_ftc_2020(1)\\OpenCV\\build\\intermediates",
+      "gradleModulePathName": ":OpenCV",
+      "moduleRootFolder": "C:\\Users\\Yaakov\\StudioProjects\\rambots_ftc_2020(1)\\OpenCV",
+      "makeFile": "C:\\Users\\Yaakov\\StudioProjects\\rambots_ftc_2020(1)\\OpenCV\\libcxx_helper\\CMakeLists.txt",
+      "buildSystem": "CMAKE",
+      "compilerSettingsCacheFolder": "C:\\Users\\Yaakov\\StudioProjects\\rambots_ftc_2020(1)\\.cxx",
+      "cxxFolder": "C:\\Users\\Yaakov\\StudioProjects\\rambots_ftc_2020(1)\\OpenCV\\.cxx",
+      "ndkFolder": "C:\\Users\\Yaakov\\AppData\\Local\\Android\\Sdk\\ndk\\20.1.5948944",
+      "ndkVersion": "20.1.5948944",
+      "ndkSupportedAbiList": [
+        "ARMEABI_V7A",
+        "ARM64_V8A",
+        "X86",
+        "X86_64"
+      ],
+      "ndkDefaultAbiList": [
+        "ARMEABI_V7A",
+        "ARM64_V8A",
+        "X86",
+        "X86_64"
+      ],
+      "cmakeToolchainFile": "."
+    },
+    "buildSystemArgumentList": [
+      "-DANDROID_STL\u003dc++_shared"
+    ],
+    "cFlagList": [],
+    "cppFlagsList": [],
+    "variantName": "debug",
+    "soFolder": "C:\\Users\\Yaakov\\StudioProjects\\rambots_ftc_2020(1)\\OpenCV\\build\\intermediates\\cmake\\debug\\lib",
+    "objFolder": "C:\\Users\\Yaakov\\StudioProjects\\rambots_ftc_2020(1)\\OpenCV\\build\\intermediates\\cmake\\debug\\obj",
+    "jsonFolder": "C:\\Users\\Yaakov\\StudioProjects\\rambots_ftc_2020(1)\\OpenCV\\.cxx\\cmake\\debug",
+    "gradleBuildOutputFolder": "C:\\Users\\Yaakov\\StudioProjects\\rambots_ftc_2020(1)\\OpenCV\\.cxx\\cxx\\debug",
+    "isDebuggableEnabled": true,
+    "validAbiList": [
+      "ARMEABI_V7A",
+      "ARM64_V8A",
+      "X86",
+      "X86_64"
+    ],
+    "buildTargetSet": [
+      "opencv_jni_shared"
+    ]
+  },
+  "abi": "X86",
+  "abiPlatformVersion": 21,
+  "cxxBuildFolder": "C:\\Users\\Yaakov\\StudioProjects\\rambots_ftc_2020(1)\\OpenCV\\.cxx\\cmake\\debug\\x86",
+  "jsonFile": "C:\\Users\\Yaakov\\StudioProjects\\rambots_ftc_2020(1)\\OpenCV\\.cxx\\cmake\\debug\\x86\\android_gradle_build.json",
+  "gradleBuildOutputFolder": "C:\\Users\\Yaakov\\StudioProjects\\rambots_ftc_2020(1)\\OpenCV\\.cxx\\cxx\\debug\\x86",
+  "objFolder": "C:\\Users\\Yaakov\\StudioProjects\\rambots_ftc_2020(1)\\OpenCV\\build\\intermediates\\cmake\\debug\\obj\\x86",
+  "buildCommandFile": "C:\\Users\\Yaakov\\StudioProjects\\rambots_ftc_2020(1)\\OpenCV\\.cxx\\cmake\\debug\\x86\\build_command.txt",
+  "buildOutputFile": "C:\\Users\\Yaakov\\StudioProjects\\rambots_ftc_2020(1)\\OpenCV\\.cxx\\cmake\\debug\\x86\\build_output.txt",
+  "modelOutputFile": "C:\\Users\\Yaakov\\StudioProjects\\rambots_ftc_2020(1)\\OpenCV\\.cxx\\cmake\\debug\\x86\\build_model.json",
+  "cmake": {
+    "cmakeListsWrapperFile": "C:\\Users\\Yaakov\\StudioProjects\\rambots_ftc_2020(1)\\OpenCV\\.cxx\\cxx\\debug\\x86\\CMakeLists.txt",
+    "toolchainWrapperFile": "C:\\Users\\Yaakov\\StudioProjects\\rambots_ftc_2020(1)\\OpenCV\\.cxx\\cxx\\debug\\x86\\android_gradle_build.toolchain.cmake",
+    "buildGenerationStateFile": "C:\\Users\\Yaakov\\StudioProjects\\rambots_ftc_2020(1)\\OpenCV\\.cxx\\cxx\\debug\\x86\\build_generation_state.json",
+    "cacheKeyFile": "C:\\Users\\Yaakov\\StudioProjects\\rambots_ftc_2020(1)\\OpenCV\\.cxx\\cxx\\debug\\x86\\compiler_cache_key.json",
+    "compilerCacheUseFile": "C:\\Users\\Yaakov\\StudioProjects\\rambots_ftc_2020(1)\\OpenCV\\.cxx\\cxx\\debug\\x86\\compiler_cache_use.json",
+    "compilerCacheWriteFile": "C:\\Users\\Yaakov\\StudioProjects\\rambots_ftc_2020(1)\\OpenCV\\.cxx\\cxx\\debug\\x86\\compiler_cache_write.json",
+    "toolchainSettingsFromCacheFile": "C:\\Users\\Yaakov\\StudioProjects\\rambots_ftc_2020(1)\\OpenCV\\.cxx\\cxx\\debug\\x86\\compiler_settings_cache.cmake",
+    "cmakeWrappingBaseFolder": "."
+  },
+  "jsonGenerationLoggingRecordFile": "C:\\Users\\Yaakov\\StudioProjects\\rambots_ftc_2020(1)\\OpenCV\\.cxx\\cmake\\debug\\x86\\json_generation_record.json",
+  "compileCommandsJsonFile": "C:\\Users\\Yaakov\\StudioProjects\\rambots_ftc_2020(1)\\OpenCV\\.cxx\\cmake\\debug\\x86\\compile_commands.json"
+}
