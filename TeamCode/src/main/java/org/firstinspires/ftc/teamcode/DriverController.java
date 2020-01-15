@@ -59,7 +59,7 @@ public class DriverController extends LinearOpMode {
         wrist = new EncodedServo(wristServo, compass2, compass1);
         elbow = new EncodedServo(elbowServo, compass1, compass0);
 
-//        claw = new Claw(hand, wrist, elbow, shoulderRotate, shoulderElevate, telemetry);
+        claw = new Claw(hand, wrist, elbow, shoulderRotate, shoulderElevate, telemetry);
         wheels = new Wheels(leftMotor, rightMotor);
         wheels.start();
         brickLoader = new BrickLoader(brickLoaderMotor);

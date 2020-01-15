@@ -21,33 +21,6 @@ public class TestOp extends LinearOpMode {
         multiplexer.write((byte) (1 << i), (byte) 0);
     }
 
-    void setup() {
-        while (true) {
-            try {
-                TimeUnit.SECONDS.sleep(1);
-            } catch (InterruptedException e) {
-                break;
-            }
-
-            telemetry.addData("TCAScanner ready", true);
-
-            for (int t = 0; t < 8; t++) {
-                tcaselect(multiplexer, t);
-                telemetry.addData("TCA Port #", t);
-
-                for (byte addr = 0; addr <= 127; addr++) {
-                    if (addr == TCAADDR) continue;
-
-                    byte data = 0;
-                    multiplexer.write(addr, data);
-                    if (multiplexer.read((byte) 0) != 0) {
-                        telemetry.addData("Found I2C 0x", addr);
-                    }
-                }
-            }
-            telemetry.addData("done", true);
-        }
-    }
 
     @Override
     public void runOpMode() {
@@ -59,7 +32,38 @@ public class TestOp extends LinearOpMode {
          */
 
         multiplexer = hardwareMap.get(TCA9548.class, "multiplexer");
-        setup();
+        telemetry.addData("Status", "Initialized");
+        telemetry.update();
+        telemetry.addData("Got here", true);
+        telemetry.update();
+            try {
+                TimeUnit.SECONDS.sleep(1);
+            } catch (InterruptedException e) {
+                telemetry.addData("Error", e);
+                telemetry.update();
+            }
+
+            telemetry.addData("TCAScanner ready", true);
+            telemetry.update();
+
+            for (int t = 0; t < 8; t++) {
+                tcaselect(multiplexer, t);
+                telemetry.addLine("TCA Port #" + t);
+                telemetry.update();
+
+                for (int addr = 0; addr <= 127; addr++) {
+                    if (addr == TCAADDR) continue;
+
+                    byte data = 0;
+                    multiplexer.write((byte) addr, data);
+                    if (multiplexer.read((byte) 0) != 0) {
+                        telemetry.addLine("Found I2C 0x" + addr);
+                    }
+                }
+            }
+            telemetry.addData("done", true);
+            telemetry.update();
+
 
     }
 }

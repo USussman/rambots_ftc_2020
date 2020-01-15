@@ -47,10 +47,22 @@ public class Claw {
         int y = (int) Math.sin(shoulderElevate.getCurrentPosition()) * r;
         x+=moveX;
         y+=moveY;
-        shoulderElevate.setTargetPosition((int)((Math.atan(y/x)/(2*Math.PI))*288));
+        telemetry.addLine("Let's go");
+        telemetry.update();
+        if (x != 0) {
+            shoulderElevate.setTargetPosition((int) ((Math.atan(y / x) / (2 * Math.PI)) * 288));
+        }
+        telemetry.addLine("Shoulder works");
+        telemetry.update();
         elbow.setTargetPosition(Math.acos(x*x+y*y-armA*armA-armB*armB+2*armA*armB));
+        telemetry.addLine("Elbow works");
+        telemetry.update();
         shoulderRotate.setPower(rotateSpeed);
+        telemetry.addLine("Shoulder rotate works");
+        telemetry.update();
         wrist.setTargetPosition(-(elbow.getTargetPosition()+shoulderElevate.getTargetPosition()*2*Math.PI));
+        telemetry.addLine("Wrist works");
+        telemetry.update();
     }
 
     public void setHandPosition(double position){
