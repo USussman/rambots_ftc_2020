@@ -30,14 +30,13 @@ import com.qualcomm.robotcore.hardware.I2cDevice;
 import com.qualcomm.robotcore.hardware.I2cDeviceSynch;
 import com.qualcomm.robotcore.hardware.I2cDeviceSynchImpl;
 
-import java.lang.reflect.Array;
-
 /**
  * Created by Chris D on 10/5/2016.
  *
  * Partially based on:
  * https://github.com/OliviliK/FTC_Library/blob/master/TCS34725_ColorSensor.java
  */
+
 public class MultiplexAccelerometer {
 
     // Registers
@@ -141,9 +140,9 @@ public class MultiplexAccelerometer {
         muxReader.engage();
 
         // Loop over the ports activating each color sensor
-        for (int i = 0; i < sensorPorts.length; i++) {
+        for (int portNumber: sensorPorts) {
             // Write to given output port on the multiplexer
-            muxReader.write8(0x0, 1 << sensorPorts[i]); // , true);
+            muxReader.write8(0x0, 1 << portNumber); // , true);
 
             ada = hardwareMap.i2cDevice.get(colorName);
             adaReader = new I2cDeviceSynchImpl(ada, ADA_ADDRESS, false);
@@ -163,8 +162,8 @@ public class MultiplexAccelerometer {
     public void setIntegrationTime(double milliSeconds) {
         int val = integrationByte(milliSeconds);
 
-        for (int i = 0; i < sensorPorts.length; i++) {
-            muxReader.write8(0x0, 1 << sensorPorts[i]);  // , true);
+        for (int portNumber: sensorPorts) {
+            muxReader.write8(0x0, 1 << portNumber);  // , true);
 //            adaReader.write8(ATIME, val);  // , true);
         }
     }
@@ -178,8 +177,8 @@ public class MultiplexAccelerometer {
 
     // Un-needed?
     public void startPolling() {
-        for (int i = 0; i < sensorPorts.length; i++) {
-            muxReader.write8(0x0, 1 << sensorPorts[i]);  // , true);
+        for (int portNumber: sensorPorts) {
+            muxReader.write8(0x0, 1 << portNumber);  // , true);
             adaReader.read8(Register.ACCEL_STATUS_REG_A.bVal);
         }
     }
