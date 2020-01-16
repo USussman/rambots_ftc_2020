@@ -24,6 +24,7 @@
 
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.hardware.adafruit.AdafruitBNO055IMU;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.I2cAddr;
 import com.qualcomm.robotcore.hardware.I2cDevice;
@@ -41,6 +42,7 @@ import com.qualcomm.robotcore.hardware.configuration.I2cSensor;
 
 @I2cSensor(name = "TCA9548 I2C Multiplexer2", description = "I2C Multiplexer from Adafruit", xmlTag = "TCA9548_2")
 public class MultiplexAccelerometer {
+    AdafruitBNO055IMU a;
 
     // Registers
     public enum Register {
@@ -101,7 +103,7 @@ public class MultiplexAccelerometer {
     // value from 0x70 to 0x77, so this line would need to be changed if a
     // non-default address is to be used.
     static final I2cAddr MUX_ADDRESS = new I2cAddr(0x70);
-    private I2cDevice mux;
+    private I2cSensor mux;
     private I2cDeviceSynch muxReader;
 
     // Only one color sensor is needed in code as the multiplexer switches
@@ -135,12 +137,12 @@ public class MultiplexAccelerometer {
                                 String colorName,
                                 int[] ports,
                                 double milliSeconds,
-                                int gain,
-                                  I2C mux2) {
+                                int gain) {
         sensorPorts = ports;
 
-//        mux = hardwareMap.get(I2cDeviceImpl.class, muxName);
-        muxReader = new I2cDeviceSynchImpl((I2cDevice) mux2, MUX_ADDRESS, false);
+//        mux = hardwareMap.i2cDevice.get(muxName);
+        mux = hardwareMap.get(I2cSensor.class, muxName);
+        muxReader = new I2cDeviceSynchImpl((I2cDevice) mux, MUX_ADDRESS, false);
         muxReader.engage();
 
         // Loop over the ports activating each color sensor

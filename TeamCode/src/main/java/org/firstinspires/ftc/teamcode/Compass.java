@@ -8,7 +8,7 @@ import com.qualcomm.robotcore.hardware.configuration.I2cSensor;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 @SuppressWarnings({"WeakerAccess", "unused"})
-@I2cSensor(name = "BNO055 IMU I2cDeviceSynchDeviceSynchDevice", description = "IMU", xmlTag = "BNO055")
+@I2cSensor(name = "BNO055 IMU I2cDeviceSynchDeviceSynchDevice", description = "IM2", xmlTag = "BNO055a")
 public class Compass extends I2cDeviceSynchDevice<I2cDeviceSynch> {
     //////////////////////////////////////////////////////////////////////////////////////////
     // User Methods
