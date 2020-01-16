@@ -59,7 +59,7 @@ public class DriverController extends LinearOpMode {
         wrist = new EncodedServo(wristServo, compass2, compass1);
         elbow = new EncodedServo(elbowServo, compass1, compass0);
 
-        claw = new Claw(hand, wrist, elbow, shoulderRotate, shoulderElevate, telemetry);
+        claw = new Claw(hand, wrist, elbow, shoulderRotate, shoulderElevate);
         wheels = new Wheels(leftMotor, rightMotor);
         wheels.start();
         brickLoader = new BrickLoader(brickLoaderMotor);
@@ -89,10 +89,10 @@ public class DriverController extends LinearOpMode {
         wheels.rightMotor.setPower(gamepad1.right_stick_y);
         wheels.leftMotor.setPower(gamepad1.left_stick_y);
 
-        claw.shoulderElevate.setTargetPosition((gamepad2.left_stick_y+1)/2);
-        claw.elbow.setTargetPosition((gamepad2.right_stick_y+)/2;
+        claw.shoulderElevate.setTargetPosition((int)(gamepad2.left_stick_y+1)*144);
+        claw.elbow.setTargetPosition((gamepad2.right_stick_y+1)/2);
         claw.shoulderRotate.setPower(gamepad2.left_stick_x);
-        claw.wrist.setTargetPosition((gamepad2.right_stick_x+1)/2;
+        claw.wrist.setTargetPosition((gamepad2.right_stick_x+1)/2);
         claw.setHandPosition(gamepad2.right_trigger);
     }
 
