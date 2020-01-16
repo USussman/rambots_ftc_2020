@@ -9,15 +9,14 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 public class Claw {
 
     private Servo hand;
-    private EncodedServo wrist;
-    private EncodedServo elbow;
-    private CRServo shoulderRotate;
-    private DcMotor shoulderElevate;
+    public EncodedServo wrist;
+    public EncodedServo elbow;
+    public CRServo shoulderRotate;
+    public DcMotor shoulderElevate;
     private static final int armA = 420;//mm
     private static final int armB = 225;//mm
-    public Telemetry telemetry;
 
-    public Claw(Servo hand, EncodedServo wrist, EncodedServo elbow, CRServo shoulderRotate, DcMotor shoulderElevate, Telemetry telemetry){
+    public Claw(Servo hand, EncodedServo wrist, EncodedServo elbow, CRServo shoulderRotate, DcMotor shoulderElevate){
         this.hand = hand;
         this.wrist = wrist;
         this.elbow = elbow;

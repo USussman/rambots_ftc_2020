@@ -70,24 +70,30 @@ public class DriverController extends LinearOpMode {
 
         // run until the end of the match (driver presses STOP)
         while (opModeIsActive()) {
-            if(gamepad1.left_trigger < 0.7){
+            if (gamepad1.left_trigger < 0.7) {
                 brickLoader.setSpeed(gamepad2.left_trigger);
-            }
-            else{
+            } else {
                 brickLoader.setSpeed(gamepad1.left_trigger);
             }
 
 
-            if((Math.abs(gamepad1.right_stick_x)) > 0.2){
+            /*if((Math.abs(gamepad1.right_stick_x)) > 0.2){
                 wheels.turn(gamepad1.left_stick_y *(22.5 * Math.PI), (gamepad1.right_stick_x>0), (Math.abs(gamepad1.right_stick_x))*100);
             }
             else{
                 wheels.drive(gamepad1.left_stick_y *(22.5 * Math.PI));
-            }
+            }*/
 
-            claw.move((int)gamepad2.right_stick_y, (int)gamepad2.left_stick_y, (gamepad2.left_stick_x)*360);
-            claw.setHandPosition(gamepad2.right_trigger);
+            //claw.move((int)gamepad2.right_stick_y, (int)gamepad2.left_stick_y, (gamepad2.left_stick_x)*360);
         }
+        wheels.rightMotor.setPower(gamepad1.right_stick_y);
+        wheels.leftMotor.setPower(gamepad1.left_stick_y);
+
+        claw.shoulderElevate.setTargetPosition((gamepad2.left_stick_y+1)/2);
+        claw.elbow.setTargetPosition((gamepad2.right_stick_y+)/2;
+        claw.shoulderRotate.setPower(gamepad2.left_stick_x);
+        claw.wrist.setTargetPosition((gamepad2.right_stick_x+1)/2;
+        claw.setHandPosition(gamepad2.right_trigger);
     }
 
 }
