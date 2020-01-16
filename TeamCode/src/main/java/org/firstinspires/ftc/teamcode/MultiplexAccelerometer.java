@@ -30,6 +30,7 @@ import com.qualcomm.robotcore.hardware.I2cDevice;
 import com.qualcomm.robotcore.hardware.I2cDeviceImpl;
 import com.qualcomm.robotcore.hardware.I2cDeviceSynch;
 import com.qualcomm.robotcore.hardware.I2cDeviceSynchImpl;
+import com.qualcomm.robotcore.hardware.configuration.I2cSensor;
 
 /**
  * Created by Chris D on 10/5/2016.
@@ -38,6 +39,7 @@ import com.qualcomm.robotcore.hardware.I2cDeviceSynchImpl;
  * https://github.com/OliviliK/FTC_Library/blob/master/TCS34725_ColorSensor.java
  */
 
+@I2cSensor(name = "TCA9548 I2C Multiplexer2", description = "I2C Multiplexer from Adafruit", xmlTag = "TCA9548_2")
 public class MultiplexAccelerometer {
 
     // Registers
@@ -133,11 +135,12 @@ public class MultiplexAccelerometer {
                                 String colorName,
                                 int[] ports,
                                 double milliSeconds,
-                                int gain) {
+                                int gain,
+                                  I2C mux2) {
         sensorPorts = ports;
 
-        mux = hardwareMap.get(I2cDeviceImpl.class, muxName);
-        muxReader = new I2cDeviceSynchImpl(mux, MUX_ADDRESS, false);
+//        mux = hardwareMap.get(I2cDeviceImpl.class, muxName);
+        muxReader = new I2cDeviceSynchImpl((I2cDevice) mux2, MUX_ADDRESS, false);
         muxReader.engage();
 
         // Loop over the ports activating each color sensor

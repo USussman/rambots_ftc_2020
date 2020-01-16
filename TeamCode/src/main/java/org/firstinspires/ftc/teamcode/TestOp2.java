@@ -16,9 +16,10 @@ public class TestOp2 extends LinearOpMode {
         String a = hardwareMap.i2cDevice.toString();
         telemetry.addLine(a);
         telemetry.update();
-        multiplexAccelerometer = new MultiplexAccelerometer(hardwareMap, "mux", "ada",
+        I2C mux2 = hardwareMap.get(I2C.class, "multiplexer");
+        multiplexAccelerometer = new MultiplexAccelerometer(hardwareMap, "multiplexer", "ada",
                 ports, milliSeconds,
-                MultiplexAccelerometer.SENSITIVITY_4G);
+                MultiplexAccelerometer.SENSITIVITY_4G, mux2);
         multiplexAccelerometer = hardwareMap.get(MultiplexAccelerometer.class, "multiplexer");
         telemetry.addData("Initialized", true);
         telemetry.update();
