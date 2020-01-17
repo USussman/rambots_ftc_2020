@@ -245,22 +245,49 @@ public class VuforiaSkyStone {
         }
     }
 
-    public float[] checkForSkyStone() {
+    /* FTC coordinate system: Origin is the center of the field.
+    -x to +x is from loading zone to building zone
+    -y to +y is from red alliance station to blue alliance station
+    */
+
+    public float[] getSkyStone() {
+        // Returns position of a Skystone in FTC coordinate system in mm.
         targetsSkyStone.activate();
         targetVisible = false;
+        float[] SkyStonePosition = new float[2];
         if (((VuforiaTrackableDefaultListener)targetsSkyStone.get(0).getListener()).isVisible()) {
-            return targetsSkyStone.get(0).getLocation().getData();
+            SkyStonePosition[0] = targetsSkyStone.get(0).getLocation().getData()[0];
+            SkyStonePosition[1] = targetsSkyStone.get(0).getLocation().getData()[1];
+            return SkyStonePosition;
         }
-        VectorF translation = lastLocation.getTranslation();
-        return new float[]{translation.get(0) / mmPerInch, translation.get(1) / mmPerInch, translation.get(2) / mmPerInch};
+        return null;
     }
 
-    public String checkForTargets() {
+    public float[] getSkyStonePolar() {
+        // Returns position of SkyStone relative to robot in polar coordinates
+        if (getRobotPosition() != null && getSkyStone() != null) {
+            float[] robot = getRobotPosition();
+            float[] skyStone = getSkyStone();
+            float[] polar = new float[2];
+            //r
+            polar[0] = (float) Math.sqrt(Math.pow(skyStone[0]-robot[0], 2) + Math.pow(skyStone[1]-robot[1], 2));
+            //Theta
+            /* Get the angle between the x-axis and the line between the stone and the robot.
+            Then adjust for the robot's rotation (yaw/heading)
+            */
+            polar[1] = (float) Math.atan(skyStone[1]-robot[1]/skyStone[0]-robot[0]) - robot[5];
+            return polar;
+        }
+        return null;
+    }
+
+    public boolean checkForTargets() {
         // check all the trackable targets to see which one (if any) is visible.
         targetsSkyStone.activate();
         targetVisible = false;
         for (VuforiaTrackable trackable : allTrackables) {
             if (((VuforiaTrackableDefaultListener)trackable.getListener()).isVisible()) {
+
                 //telemetry.addData("Visible Target", trackable.getName());
                 targetVisible = true;
 
@@ -273,15 +300,59 @@ public class VuforiaSkyStone {
                 break;
             }
         }
-        return "";
+        return targetVisible;
     }
 
     public float[] getRobotPosition() {
-        // Return position (translation) of robot in inches. Returns negative if unknown
-        if (targetVisible) {
-            VectorF translation = lastLocation.getTranslation();
-            return new float[]{translation.get(0) / mmPerInch, translation.get(1) / mmPerInch, translation.get(2) / mmPerInch};
+        // Return position of robot in mm in FTC coordinate system. Returns x,y,z,roll,pitch,heading
+        // Returns an empty array if no targets are visible;
+        targetVisible = false;
+
+        for (VuforiaTrackable trackable : allTrackables) {
+            if (((VuforiaTrackableDefaultListener)trackable.getListener()).isVisible()) {
+                targetVisible = true;
+
+                // getUpdatedRobotLocation() will return null if no new information is available since
+                // the last time that call was made, or if the trackable is not currently visible.
+                OpenGLMatrix robotLocationTransform = ((VuforiaTrackableDefaultListener)trackable.getListener()).getUpdatedRobotLocation();
+                if (robotLocationTransform != null) {
+                    lastLocation = robotLocationTransform;
+                }
+                break;
+            }
         }
-        return new float[]{-1,-1,-1};
+
+        // Disable Tracking when we are done
+        targetsSkyStone.deactivate();
+        // Provide feedback as to where the robot is located (if we know).
+        if (targetVisible) {
+            // express position (translation) of robot in inches.
+            VectorF translation = lastLocation.getTranslation();
+            // express the rotation of the robot in degrees.
+            Orientation rotation = Orientation.getOrientation(lastLocation, EXTRINSIC, XYZ, DEGREES);
+
+            // X, Y, Z, Roll, Pitch, Heading
+            return new float[]{translation.get(0), translation.get(1), translation.get(2), rotation.firstAngle, rotation.secondAngle, rotation.thirdAngle};
+        } else {
+            return null;
+        }
+    }
+
+    public float[] getRobotPositionPolar() {
+        /* Take the output from getRobotPosition and converts it to polar coordinates.
+        Outputs r,theta,roll,pitch,heading
+        Disregards z
+        */
+        if (getRobotPosition() != null) {
+            float[] xyz = getRobotPosition();
+            float[] polar = new float[5];
+            polar[0] = (float) Math.sqrt(Math.pow(xyz[0], 2) + Math.pow(xyz[1], 2));
+            polar[1] = (float) Math.atan(xyz[1]/xyz[0]);
+            polar[2] = xyz[3];
+            polar[3] = xyz[4];
+            polar[4] = xyz[5];
+            return polar;
+        }
+        return null;
     }
 }
