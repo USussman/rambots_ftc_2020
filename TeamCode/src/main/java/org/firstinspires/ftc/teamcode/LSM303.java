@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.hardware.bosch.NaiveAccelerationIntegrator;
 import com.qualcomm.robotcore.hardware.I2cAddr;
 import com.qualcomm.robotcore.hardware.I2cDeviceSynch;
 import com.qualcomm.robotcore.hardware.I2cDeviceSynchDevice;
@@ -75,7 +76,8 @@ public class LSM303 extends I2cDeviceSynchDevice<I2cDeviceSynch> {
 
     public enum Register {
         // Currently only for accelerometer
-        FIRST (0),
+        ID(0x0F),
+        FIRST (ID.bVal),
         ACCEL_CTRL_REG1_A(0x20),   // 00000111   rw
         ACCEL_CTRL_REG2_A(0x21),   // 00000000   rw
         ACCEL_CTRL_REG3_A(0x22),   // 00000000   rw
@@ -120,16 +122,39 @@ public class LSM303 extends I2cDeviceSynchDevice<I2cDeviceSynch> {
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
     private final I2cAddr I2cAddress = I2cAddr.create7bit(0x19);
+    protected static final I2cDeviceSynch.ReadWindow lowerWindow = newWindow(Register.FIRST, Register.LAST);
+
+    // We always read as much as we can when we have nothing else to do
+    protected static final I2cDeviceSynch.ReadMode readMode = I2cDeviceSynch.ReadMode.REPEAT;
+
+    protected static I2cDeviceSynch.ReadWindow newWindow(Register regFirst, Register regMax)
+    {
+        return new I2cDeviceSynch.ReadWindow(regFirst.bVal, regMax.bVal-regFirst.bVal, readMode);
+    }
+
 
     public LSM303(I2cDeviceSynch deviceClient)
     {
+//        super(deviceClient, true);
+//        throw (new Exception("I can change the code."));
+
+//        this.setOptimalReadWindow();
+//        this.deviceClient.setI2cAddress(I2cAddress);
+//
+//        super.registerArmingStateCallback(false);
+//        this.deviceClient.engage();
+
         super(deviceClient, true);
 
-        this.setOptimalReadWindow();
-        this.deviceClient.setI2cAddress(I2cAddress);
-
-        super.registerArmingStateCallback(false);
+        this.deviceClient.setReadWindow(lowerWindow);
         this.deviceClient.engage();
+
+//        this.currentMode           = null;
+//        this.accelerationAlgorithm = new NaiveAccelerationIntegrator();
+//        this.accelerationMananger  = null;
+
+        this.registerArmingStateCallback(false);
+
     }
 
     private void setOptimalReadWindow() {

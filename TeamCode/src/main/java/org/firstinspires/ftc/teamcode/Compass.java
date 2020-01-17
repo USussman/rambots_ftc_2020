@@ -5,8 +5,10 @@ import com.qualcomm.robotcore.hardware.I2cDeviceSynch;
 import com.qualcomm.robotcore.hardware.I2cDeviceSynchDevice;
 import com.qualcomm.robotcore.hardware.configuration.I2cSensor;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
+
 @SuppressWarnings({"WeakerAccess", "unused"})
-@I2cSensor(name = "BNO055 IMU", description = "IMU", xmlTag = "BNO055")
+@I2cSensor(name = "BNO055 IMU I2cDeviceSynchDeviceSynchDevice", description = "IM2", xmlTag = "BNO055a")
 public class Compass extends I2cDeviceSynchDevice<I2cDeviceSynch> {
     //////////////////////////////////////////////////////////////////////////////////////////
     // User Methods
@@ -300,23 +302,39 @@ public class Compass extends I2cDeviceSynchDevice<I2cDeviceSynch> {
     public double theta, psi;
     public Mode mode;
 
-    public Compass(I2cDeviceSynch deviceClient) {
+    public Compass(I2cDeviceSynch deviceClient, Telemetry telemetry) {
 
         super(deviceClient, true);
+        int i = 0;
+        try {
+            i++;
+            this.setOptimalReadWindow();
+            i++;
+            telemetry.addLine("" +1);
+            i++;
+            this.deviceClient.setI2cAddress(ADDRESS_I2C_DEFAULT);
 
-        this.setOptimalReadWindow();
-        this.deviceClient.setI2cAddress(ADDRESS_I2C_DEFAULT);
+            i++;
+            super.registerArmingStateCallback(false);
+            i++;
+            this.deviceClient.engage();
 
-        super.registerArmingStateCallback(false);
-        this.deviceClient.engage();
+            i++;
+            int[] acceleration = getAccelerometerRaw();
+            i++;
+            this.theta = Math.atan2(acceleration[0],
+                    Math.sqrt(acceleration[1] * acceleration[1] + acceleration[2] * acceleration[2]));
+            i++;
+            this.psi = Math.atan2(acceleration[1],
+                    Math.sqrt(acceleration[0] * acceleration[0] + acceleration[2] * acceleration[2]));
 
-        int[] acceleration = getAccelerometerRaw();
-        this.theta = Math.atan2(acceleration[0],
-                Math.sqrt(acceleration[1]*acceleration[1] + acceleration[2]*acceleration[2]));
-        this.psi = Math.atan2(acceleration[1],
-                Math.sqrt(acceleration[0]*acceleration[0] + acceleration[2]*acceleration[2]));
-
-        setMode(Mode.ACCMAG_MODE);
+            i++;
+            setMode(Mode.ACCMAG_MODE);
+        } catch (Exception e) {
+            telemetry.addLine("" + i);
+            telemetry.addLine(e.toString());
+            telemetry.update();
+        }
     }
 
     protected void setOptimalReadWindow() {

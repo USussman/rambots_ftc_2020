@@ -8,8 +8,8 @@ public class Wheels extends Thread{
     private double speed; //positive is forward, negative is backward. measured in cm/sec
     private static final int width = 360; //in mm
 
-    private DcMotor leftMotor;
-    private DcMotor rightMotor;
+    public DcMotor leftMotor;
+    public DcMotor rightMotor;
 
 
     private double turnOuterSpeed;
