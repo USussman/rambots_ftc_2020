@@ -16,7 +16,7 @@ public class DriverController extends LinearOpMode {
     private CRServo shoulderRotate;
     private DcMotor shoulderElevate;
 
-    private TCA9548 multiplexer;
+    //private TCA9548 multiplexer;
     private LSM303a compass0;
     private LSM303a compass1;
     private LSM303a compass2;
@@ -30,8 +30,8 @@ public class DriverController extends LinearOpMode {
     private Wheels wheels;
     private BrickLoader brickLoader;
 
-    private EncodedServo wrist;
-    private EncodedServo elbow;
+    //private EncodedServo wrist;
+    //private EncodedServo elbow;
 
     private ElapsedTime runtime = new ElapsedTime();
 
@@ -85,15 +85,16 @@ public class DriverController extends LinearOpMode {
             }*/
 
             //claw.move((int)gamepad2.right_stick_y, (int)gamepad2.left_stick_y, (gamepad2.left_stick_x)*360);
-        }
-        wheels.rightMotor.setPower(gamepad1.right_stick_y);
-        wheels.leftMotor.setPower(gamepad1.left_stick_y);
 
-        claw.shoulderElevate.setPower(gamepad2.left_stick_y);
-        claw.elbow.setPower(gamepad2.right_stick_y);
-        claw.shoulderRotate.setPower(gamepad2.left_stick_x);
-        claw.wrist.setPower(gamepad2.right_stick_x);
-        claw.setHandPosition(gamepad2.right_trigger);
+            wheels.rightMotor.setPower(gamepad1.right_stick_y);
+            wheels.leftMotor.setPower(gamepad1.left_stick_y);
+
+            claw.shoulderElevate.setPower(gamepad2.left_stick_y);
+            claw.elbow.setPower(gamepad2.right_stick_y);
+            claw.shoulderRotate.setPower(gamepad2.left_stick_x);
+            claw.wrist.setPower(gamepad2.right_stick_x);
+            claw.setHandPosition(gamepad2.right_trigger);
+        }
     }
 
 }
