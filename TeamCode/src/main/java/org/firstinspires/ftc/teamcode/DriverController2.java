@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-@TeleOp(name="DriverControlledOpMode", group="DriverOpModes")
+@TeleOp(name="DriverControlledOpMode2", group="DriverOpModes")
 
 public class DriverController2 extends LinearOpMode {
     private Servo hand;
@@ -61,17 +61,22 @@ public class DriverController2 extends LinearOpMode {
             if (gamepad1.left_trigger < 0.7) {
                 brickLoader.setSpeed(gamepad2.left_trigger);
             } else {
-                brickLoader.setSpeed(gamepad1.left_trigger);
+                if (gamepad1.right_trigger > 0.3) {
+                    brickLoader.setSpeed(-gamepad1.right_trigger);
+                } else {
+                    brickLoader.setSpeed(gamepad1.left_trigger);
+                }
             }
+
 
             wheels.rightMotor.setPower(gamepad1.right_stick_y);
             wheels.leftMotor.setPower(gamepad1.left_stick_y);
 
-            claw.shoulderElevate.setPower(gamepad2.left_stick_y);
-            claw.elbow.setPower(gamepad2.right_stick_y);
-            claw.shoulderRotate.setPower(gamepad2.left_stick_x);
-            claw.wrist.setPower(gamepad2.right_stick_x);
-            claw.setHandPosition(gamepad2.right_trigger);
+            claw.shoulderElevate.setPower(-gamepad2.left_stick_y);
+            claw.elbow.setPower(gamepad2.right_stick_y);//2
+            claw.shoulderRotate.setPower(gamepad2.left_stick_x);//0
+            claw.wrist.setPower(gamepad2.right_stick_x);//1
+            claw.setHandPosition(gamepad2.right_trigger);//3
         }
     }
 
