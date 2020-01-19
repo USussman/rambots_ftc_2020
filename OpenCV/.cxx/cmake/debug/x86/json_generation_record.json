@@ -13,11 +13,15 @@
   },
   {
     "level": "INFO",
-    "message": "- CMake found in SDK at \u0027C:\\Users\\Yaakov\\AppData\\Local\\Android\\Sdk\\cmake\\3.6.4111459\u0027 had version \u00273.6.0\u0027"
+    "message": "- CMake found in SDK at \u0027/home/eliezer/Android/Sdk/cmake/3.6.4111459\u0027 had version \u00273.6.0\u0027"
   },
   {
     "level": "INFO",
-    "message": "rebuilding JSON C:\\Users\\Yaakov\\StudioProjects\\rambots_ftc_2020(1)\\OpenCV\\.cxx\\cmake\\debug\\x86\\android_gradle_build.json due to:"
+    "message": "rebuilding JSON /home/eliezer/Documents/rambots_ftc_2020/OpenCV/.cxx/cmake/debug/x86/android_gradle_build.json due to:"
+  },
+  {
+    "level": "INFO",
+    "message": "- expected json /home/eliezer/Documents/rambots_ftc_2020/OpenCV/.cxx/cmake/debug/x86/android_gradle_build.json file is not present, will remove stale json folder"
   },
   {
     "level": "INFO",
@@ -25,27 +29,19 @@
   },
   {
     "level": "INFO",
-    "message": "- a dependent build file changed"
+    "message": "removing stale contents from \u0027/home/eliezer/Documents/rambots_ftc_2020/OpenCV/.cxx/cmake/debug/x86\u0027"
   },
   {
     "level": "INFO",
-    "message": "  - C:\\Users\\urielsussman\\Downloads\\ftc_app-master\\OpenCV\\libcxx_helper\\CMakeLists.txt"
+    "message": "created folder \u0027/home/eliezer/Documents/rambots_ftc_2020/OpenCV/.cxx/cmake/debug/x86\u0027"
   },
   {
     "level": "INFO",
-    "message": "removing stale contents from \u0027C:\\Users\\Yaakov\\StudioProjects\\rambots_ftc_2020(1)\\OpenCV\\.cxx\\cmake\\debug\\x86\u0027"
+    "message": "executing cmake Executable : /home/eliezer/Android/Sdk/cmake/3.6.4111459/bin/cmake\narguments : \n-H/home/eliezer/Documents/rambots_ftc_2020/OpenCV/libcxx_helper\n-B/home/eliezer/Documents/rambots_ftc_2020/OpenCV/.cxx/cmake/debug/x86\n-DANDROID_ABI\u003dx86\n-DANDROID_PLATFORM\u003dandroid-21\n-DCMAKE_LIBRARY_OUTPUT_DIRECTORY\u003d/home/eliezer/Documents/rambots_ftc_2020/OpenCV/build/intermediates/cmake/debug/obj/x86\n-DCMAKE_BUILD_TYPE\u003dDebug\n-DANDROID_NDK\u003d/home/eliezer/Android/Sdk/ndk/21.0.6113669\n-DCMAKE_TOOLCHAIN_FILE\u003d/home/eliezer/Android/Sdk/ndk/21.0.6113669/build/cmake/android.toolchain.cmake\n-DCMAKE_MAKE_PROGRAM\u003d/home/eliezer/Android/Sdk/cmake/3.6.4111459/bin/ninja\n-GAndroid Gradle - Ninja\n-DANDROID_STL\u003dc++_shared\njvmArgs : \n\n"
   },
   {
     "level": "INFO",
-    "message": "created folder \u0027C:\\Users\\Yaakov\\StudioProjects\\rambots_ftc_2020(1)\\OpenCV\\.cxx\\cmake\\debug\\x86\u0027"
-  },
-  {
-    "level": "INFO",
-    "message": "executing cmake Executable : C:\\Users\\Yaakov\\AppData\\Local\\Android\\Sdk\\cmake\\3.6.4111459\\bin\\cmake.exe\narguments : \n-HC:\\Users\\Yaakov\\StudioProjects\\rambots_ftc_2020(1)\\OpenCV\\libcxx_helper\n-BC:\\Users\\Yaakov\\StudioProjects\\rambots_ftc_2020(1)\\OpenCV\\.cxx\\cmake\\debug\\x86\n-DANDROID_ABI\u003dx86\n-DANDROID_PLATFORM\u003dandroid-21\n-DCMAKE_LIBRARY_OUTPUT_DIRECTORY\u003dC:\\Users\\Yaakov\\StudioProjects\\rambots_ftc_2020(1)\\OpenCV\\build\\intermediates\\cmake\\debug\\obj\\x86\n-DCMAKE_BUILD_TYPE\u003dDebug\n-DANDROID_NDK\u003dC:\\Users\\Yaakov\\AppData\\Local\\Android\\Sdk\\ndk\\20.1.5948944\n-DCMAKE_TOOLCHAIN_FILE\u003dC:\\Users\\Yaakov\\AppData\\Local\\Android\\Sdk\\ndk\\20.1.5948944\\build\\cmake\\android.toolchain.cmake\n-DCMAKE_MAKE_PROGRAM\u003dC:\\Users\\Yaakov\\AppData\\Local\\Android\\Sdk\\cmake\\3.6.4111459\\bin\\ninja.exe\n-GAndroid Gradle - Ninja\n-DANDROID_STL\u003dc++_shared\njvmArgs : \n\n"
-  },
-  {
-    "level": "INFO",
-    "message": "Executable : C:\\Users\\Yaakov\\AppData\\Local\\Android\\Sdk\\cmake\\3.6.4111459\\bin\\cmake.exe\narguments : \n-HC:\\Users\\Yaakov\\StudioProjects\\rambots_ftc_2020(1)\\OpenCV\\libcxx_helper\n-BC:\\Users\\Yaakov\\StudioProjects\\rambots_ftc_2020(1)\\OpenCV\\.cxx\\cmake\\debug\\x86\n-DANDROID_ABI\u003dx86\n-DANDROID_PLATFORM\u003dandroid-21\n-DCMAKE_LIBRARY_OUTPUT_DIRECTORY\u003dC:\\Users\\Yaakov\\StudioProjects\\rambots_ftc_2020(1)\\OpenCV\\build\\intermediates\\cmake\\debug\\obj\\x86\n-DCMAKE_BUILD_TYPE\u003dDebug\n-DANDROID_NDK\u003dC:\\Users\\Yaakov\\AppData\\Local\\Android\\Sdk\\ndk\\20.1.5948944\n-DCMAKE_TOOLCHAIN_FILE\u003dC:\\Users\\Yaakov\\AppData\\Local\\Android\\Sdk\\ndk\\20.1.5948944\\build\\cmake\\android.toolchain.cmake\n-DCMAKE_MAKE_PROGRAM\u003dC:\\Users\\Yaakov\\AppData\\Local\\Android\\Sdk\\cmake\\3.6.4111459\\bin\\ninja.exe\n-GAndroid Gradle - Ninja\n-DANDROID_STL\u003dc++_shared\njvmArgs : \n\n"
+    "message": "Executable : /home/eliezer/Android/Sdk/cmake/3.6.4111459/bin/cmake\narguments : \n-H/home/eliezer/Documents/rambots_ftc_2020/OpenCV/libcxx_helper\n-B/home/eliezer/Documents/rambots_ftc_2020/OpenCV/.cxx/cmake/debug/x86\n-DANDROID_ABI\u003dx86\n-DANDROID_PLATFORM\u003dandroid-21\n-DCMAKE_LIBRARY_OUTPUT_DIRECTORY\u003d/home/eliezer/Documents/rambots_ftc_2020/OpenCV/build/intermediates/cmake/debug/obj/x86\n-DCMAKE_BUILD_TYPE\u003dDebug\n-DANDROID_NDK\u003d/home/eliezer/Android/Sdk/ndk/21.0.6113669\n-DCMAKE_TOOLCHAIN_FILE\u003d/home/eliezer/Android/Sdk/ndk/21.0.6113669/build/cmake/android.toolchain.cmake\n-DCMAKE_MAKE_PROGRAM\u003d/home/eliezer/Android/Sdk/cmake/3.6.4111459/bin/ninja\n-GAndroid Gradle - Ninja\n-DANDROID_STL\u003dc++_shared\njvmArgs : \n\n"
   },
   {
     "level": "INFO",
@@ -53,11 +49,11 @@
   },
   {
     "level": "INFO",
-    "message": "write build output C:\\Users\\Yaakov\\StudioProjects\\rambots_ftc_2020(1)\\OpenCV\\.cxx\\cmake\\debug\\x86\\build_output.txt"
+    "message": "write build output /home/eliezer/Documents/rambots_ftc_2020/OpenCV/.cxx/cmake/debug/x86/build_output.txt"
   },
   {
     "level": "INFO",
-    "message": "write command file C:\\Users\\Yaakov\\StudioProjects\\rambots_ftc_2020(1)\\OpenCV\\.cxx\\cmake\\debug\\x86\\build_command.txt"
+    "message": "write command file /home/eliezer/Documents/rambots_ftc_2020/OpenCV/.cxx/cmake/debug/x86/build_command.txt"
   },
   {
     "level": "INFO",
