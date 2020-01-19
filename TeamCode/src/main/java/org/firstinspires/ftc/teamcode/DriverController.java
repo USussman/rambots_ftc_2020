@@ -56,10 +56,10 @@ public class DriverController extends LinearOpMode {
         compass1 = new LSM303a(multiplexer, (byte) 1);
         compass2 = new LSM303a(multiplexer, (byte) 2);
 
-        wrist = new EncodedServo(wristServo, compass2, compass1);
-        elbow = new EncodedServo(elbowServo, compass1, compass0);
+        //wrist = new EncodedServo(wristServo, compass2, compass1);
+        //elbow = new EncodedServo(elbowServo, compass1, compass0);
 
-        claw = new Claw(hand, wrist, elbow, shoulderRotate, shoulderElevate);
+        claw = new Claw(hand, wristServo, elbowServo, shoulderRotate, shoulderElevate);
         wheels = new Wheels(leftMotor, rightMotor);
         wheels.start();
         brickLoader = new BrickLoader(brickLoaderMotor);
