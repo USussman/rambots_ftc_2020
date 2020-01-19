@@ -89,10 +89,10 @@ public class DriverController extends LinearOpMode {
         wheels.rightMotor.setPower(gamepad1.right_stick_y);
         wheels.leftMotor.setPower(gamepad1.left_stick_y);
 
-        claw.shoulderElevate.setTargetPosition((int)(gamepad2.left_stick_y+1)*144);
-        claw.elbow.setTargetPosition((gamepad2.right_stick_y+1)/2);
+        claw.shoulderElevate.setPower(gamepad2.left_stick_y);
+        claw.elbow.setPower(gamepad2.right_stick_y);
         claw.shoulderRotate.setPower(gamepad2.left_stick_x);
-        claw.wrist.setTargetPosition((gamepad2.right_stick_x+1)/2);
+        claw.wrist.setPower(gamepad2.right_stick_x);
         claw.setHandPosition(gamepad2.right_trigger);
     }
 
