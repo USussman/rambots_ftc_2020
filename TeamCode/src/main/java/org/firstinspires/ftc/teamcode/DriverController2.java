@@ -9,25 +9,25 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 @TeleOp(name="DriverControlledOpMode", group="DriverOpModes")
 
-public class DriverController extends LinearOpMode {
+public class DriverController2 extends LinearOpMode {
     private Servo hand;
     private CRServo wristServo;
     private CRServo elbowServo;
     private CRServo shoulderRotate;
     private DcMotor shoulderElevate;
 
-    private LSM303a compass0;
-    private LSM303a compass1;
-    private LSM303a compass2;
+    //private LSM303a compass0;
+    //private LSM303a compass1;
+    //private LSM303a compass2;
 
     private DcMotor leftMotor;
     private DcMotor rightMotor;
 
     private DcMotor brickLoaderMotor;
 
-    private Claw claw;
-    private Wheels wheels;
-    private BrickLoader brickLoader;
+    private Claw2 claw;
+    private Wheels2 wheels;
+    private BrickLoader2 brickLoader;
 
     private ElapsedTime runtime = new ElapsedTime();
 
@@ -47,10 +47,10 @@ public class DriverController extends LinearOpMode {
         shoulderRotate  = hardwareMap.get(CRServo.class, "shoulderRotate");
         hand = hardwareMap.get(Servo.class, "hand");
 
-        claw = new Claw(hand, wristServo, elbowServo, shoulderRotate, shoulderElevate);
-        wheels = new Wheels(leftMotor, rightMotor);
+        claw = new Claw2(hand, wristServo, elbowServo, shoulderRotate, shoulderElevate);
+        wheels = new Wheels2(leftMotor, rightMotor);
         wheels.start();
-        brickLoader = new BrickLoader(brickLoaderMotor);
+        brickLoader = new BrickLoader2(brickLoaderMotor);
 
         // Wait for the game to start (driver presses PLAY)
         waitForStart();

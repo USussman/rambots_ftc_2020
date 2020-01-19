@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.CRServo;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
-public class Claw {
+public class Claw2 {
 
     private Servo hand;
     public CRServo wrist;
@@ -16,7 +16,7 @@ public class Claw {
     private static final int armA = 420;//mm
     private static final int armB = 225;//mm
 
-    public Claw(Servo hand, CRServo wrist, CRServo elbow, CRServo shoulderRotate, DcMotor shoulderElevate){
+    public Claw2(Servo hand, CRServo wrist, CRServo elbow, CRServo shoulderRotate, DcMotor shoulderElevate){
         this.hand = hand;
         this.wrist = wrist;
         this.elbow = elbow;
@@ -29,7 +29,7 @@ public class Claw {
         wrist.setDirection(DcMotorSimple.Direction.FORWARD);
         wrist.setPower(0);
         shoulderRotate.setDirection(DcMotorSimple.Direction.FORWARD);
-        shoulderRotate.setPower(0)
+        shoulderRotate.setPower(0);
     }
 
 

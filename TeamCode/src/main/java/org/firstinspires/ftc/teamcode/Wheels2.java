@@ -3,7 +3,7 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-public class Wheels extends Thread{
+public class Wheels2 extends Thread{
     //two hex motors 150rpm 90pi mm circumference
     private double speed; //positive is forward, negative is backward. measured in cm/sec
     private static final int width = 360; //in mm
@@ -17,7 +17,7 @@ public class Wheels extends Thread{
     private double turnTurnRadius;
     private boolean turn;
 
-    public Wheels(DcMotor lm, DcMotor rm){
+    public Wheels2(DcMotor lm, DcMotor rm){
         leftMotor = lm;
         rightMotor = rm;
         leftMotor.setDirection(DcMotor.Direction.FORWARD); //might need to reverse
