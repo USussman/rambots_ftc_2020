@@ -34,7 +34,7 @@ public class Wheels2 extends Thread{
         double innerSpeed = outerSpeed/(1+width/turnRadius);
         ((angle < 0) ? leftMotor : rightMotor).setPower(innerSpeed/(22.5 * Math.PI)); //divide by max speed in order to get number in range [-1.0, 1.0]
         ((angle > 0) ? leftMotor : rightMotor).setPower(outerSpeed/(22.5 * Math.PI)); //divide by max speed in order to get number in range [-1.0, 1.0]
-        ElapsedTime time = new ElapsedTime(ElapsedTime.SECONDS);
+        ElapsedTime time = new ElapsedTime();
         time.reset();
         //wait to complete turn
         double radians = (angle*Math.PI)/180;

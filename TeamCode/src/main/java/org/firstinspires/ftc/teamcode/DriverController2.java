@@ -58,14 +58,13 @@ public class DriverController2 extends LinearOpMode {
 
         // run until the end of the match (driver presses STOP)
         while (opModeIsActive()) {
+            if (gamepad1.right_trigger > 0.3) {
+                brickLoader.setSpeed(-gamepad1.right_trigger);
+            }
             if (gamepad1.left_trigger < 0.7) {
                 brickLoader.setSpeed(gamepad2.left_trigger);
             } else {
-                if (gamepad1.right_trigger > 0.3) {
-                    brickLoader.setSpeed(-gamepad1.right_trigger);
-                } else {
-                    brickLoader.setSpeed(gamepad1.left_trigger);
-                }
+                brickLoader.setSpeed(gamepad1.left_trigger);
             }
 
 
