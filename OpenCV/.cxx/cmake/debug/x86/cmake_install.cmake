@@ -1,4 +1,4 @@
-# Install script for directory: C:/Users/Yaakov/StudioProjects/rambots_ftc_2020(1)/OpenCV/libcxx_helper
+# Install script for directory: C:/Users/AS/StudioProjects/rambots_ftc_2020/OpenCV/libcxx_helper
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -40,5 +40,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "C:/Users/Yaakov/StudioProjects/rambots_ftc_2020(1)/OpenCV/.cxx/cmake/debug/x86/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "C:/Users/AS/StudioProjects/rambots_ftc_2020/OpenCV/.cxx/cmake/debug/x86/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")
