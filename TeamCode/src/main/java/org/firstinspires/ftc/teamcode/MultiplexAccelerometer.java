@@ -30,6 +30,7 @@ import com.qualcomm.robotcore.hardware.I2cAddr;
 import com.qualcomm.robotcore.hardware.I2cDevice;
 import com.qualcomm.robotcore.hardware.I2cDeviceImpl;
 import com.qualcomm.robotcore.hardware.I2cDeviceSynch;
+import com.qualcomm.robotcore.hardware.I2cDeviceSynchDevice;
 import com.qualcomm.robotcore.hardware.I2cDeviceSynchImpl;
 import com.qualcomm.robotcore.hardware.configuration.I2cSensor;
 
@@ -103,7 +104,7 @@ public class MultiplexAccelerometer {
     // value from 0x70 to 0x77, so this line would need to be changed if a
     // non-default address is to be used.
     static final I2cAddr MUX_ADDRESS = new I2cAddr(0x70);
-    private I2cSensor mux;
+    private I2cDevice mux;
     private I2cDeviceSynch muxReader;
 
     // Only one color sensor is needed in code as the multiplexer switches
@@ -140,8 +141,9 @@ public class MultiplexAccelerometer {
                                 int gain) {
         sensorPorts = ports;
 
-//        mux = hardwareMap.i2cDevice.get(muxName);
-        mux = hardwareMap.get(I2cSensor.class, muxName);
+        hardwareMap.i2cDevice.put(muxName, mux);
+        mux = hardwareMap.i2cDevice.get(muxName);
+//        mux = hardwareMap.get(I2cSensor.class, muxName);
         muxReader = new I2cDeviceSynchImpl((I2cDevice) mux, MUX_ADDRESS, false);
         muxReader.engage();
 
