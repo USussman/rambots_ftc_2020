@@ -56,6 +56,10 @@ public class AutoRed extends LinearOpMode {
         while (opModeIsActive()) {
             // Find Brick
             // move toward brick
+            turnInPlace(brick.angle);
+            wheels.drive(maxSpeed);
+            while (brick.distance < n) {}
+            wheels.stopDriving();
 
 
             // regain heading
@@ -67,7 +71,7 @@ public class AutoRed extends LinearOpMode {
             // back up
             wheels.drive(maxSpeed);
             sleep(100);
-            wheels.drive(0);
+            wheels.stopDriving();
 
             // turn to 90 deg (direction dependent on alliance color)
             turnInPlace(90);
@@ -75,19 +79,31 @@ public class AutoRed extends LinearOpMode {
             //drive straight until line
             wheels.drive(maxSpeed);
             while (lineSensor.active == false) {}
-            wheels.drive(0);
+            wheels.stopDriving();
 
-            /*
-            preprogrammed block:
-                lift grabber
-                drive straight
-                turn toward base 90 deg
-                engage grabber
-                turn 90 deg away from base in place
-                disengage grabber
-            end block
-            drive back until line
-             */
+            // lift grabber
+            grabber.setPosition(0);
+
+            // drive straight
+            wheels.drive(maxSpeed);
+            sleep(050);
+
+            // turn toward base
+            turnInPlace(180);
+
+            // engage grabber
+            grabber.setPosition(1/3);
+
+            // turnInPlace 90 def away from base
+            turnInPlace(90);
+
+            // disengage grabber
+            grabber.setPosition(0);
+
+            // drive back until line
+            wheels.drive(-maxSpeed);
+            while (lineSensor.active == false) {}
+            wheels.stopDriving();
         }
     }
 
