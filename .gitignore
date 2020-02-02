@@ -28,3 +28,4 @@ build/
 
 # Open CV build files
 .cxx/
+OpenCV/
