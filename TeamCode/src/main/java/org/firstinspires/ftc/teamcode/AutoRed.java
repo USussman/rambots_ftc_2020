@@ -1,8 +1,11 @@
 package org.firstinspires.ftc.teamcode;
 
+import android.graphics.Color;
+
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.hardware.bosch.JustLoggingAccelerationIntegrator;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 
@@ -28,6 +31,18 @@ public class AutoRed extends LinearOpMode {
 
     private Camera brick;
 
+    ColorSensor sensorColor;
+
+    // sometimes it helps to multiply the raw RGB values with a scale factor
+    // to amplify/attentuate the measured values.
+    final double SCALE_FACTOR = 255;
+
+    // hsvValues is an array that will hold the hue, saturation, and value information.
+    float hsvValues[] = {0F, 0F, 0F};
+
+    // values is a reference to the hsvValues array.
+    final float values[] = hsvValues;
+
 
     public void runOpMode() {
         telemetry.addData("Status", "Initialized");
@@ -46,6 +61,9 @@ public class AutoRed extends LinearOpMode {
         // Initialize grabber
         grabber = hardwareMap.get(Servo.class, "graber");
 
+        sensorColor = hardwareMap.get(ColorSensor.class, "sensor_color");
+
+
         // Initialize BNO055 IMU
         imuInit();
         angles   = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
@@ -63,7 +81,7 @@ public class AutoRed extends LinearOpMode {
             // move toward brick
             turnInPlace((int) brick.angle);
             wheels.drive(maxSpeed);
-            while (brick.distance < n) {}
+            while (brick.distance < 1) {}
             wheels.stopDriving();
 
 
@@ -83,7 +101,7 @@ public class AutoRed extends LinearOpMode {
 
             //drive straight until line
             wheels.drive(maxSpeed);
-            while (lineSensor.active == false) {}
+            while (inRange(0, 10) == false) {}
             wheels.stopDriving();
 
             // lift grabber
@@ -91,7 +109,7 @@ public class AutoRed extends LinearOpMode {
 
             // drive straight
             wheels.drive(maxSpeed);
-            sleep(050);
+            sleep(50);
 
             // turn toward base
             turnInPlace(180);
@@ -107,7 +125,7 @@ public class AutoRed extends LinearOpMode {
 
             // drive back until line
             wheels.drive(-maxSpeed);
-            while (lineSensor.active == false) {}
+            while (inRange(0, 10) == false) {}
             wheels.stopDriving();
         }
     }
@@ -150,6 +168,18 @@ public class AutoRed extends LinearOpMode {
     private void turnInPlace(int degrees) {
         while (!((angles.firstAngle - heading) > (degrees - 5) && (angles.firstAngle - heading) < (degrees + 5))) {
             wheels.turn((degrees - ((angles.firstAngle - heading + 180) % 360 - 180)) / 180 * maxSpeed);
+        }
+    }
+
+    private boolean inRange(int lowerBound, int upperBound) {
+        Color.RGBToHSV((int) (sensorColor.red() * SCALE_FACTOR),
+                (int) (sensorColor.green() * SCALE_FACTOR),
+                (int) (sensorColor.blue() * SCALE_FACTOR),
+                hsvValues);
+        if (hsvValues[0] > lowerBound && hsvValues[0] < upperBound) {
+            return true;
+        } else {
+            return false;
         }
     }
 
