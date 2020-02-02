@@ -82,6 +82,10 @@ public class Wheels2 extends Thread{
         rightMotor.setPower(speed);
     }
 
+    public void stopDriving() {
+        drive(0);
+    }
+
     public void run(){
         if(turn == true){
             turnThread(turnOuterSpeed, turnAngle, turnTurnRadius);
