@@ -26,6 +26,8 @@ public class AutoRed extends LinearOpMode {
     private double heading;
     private double maxSpeed;
 
+    private Camera brick;
+
 
     public void runOpMode() {
         telemetry.addData("Status", "Initialized");
@@ -49,6 +51,9 @@ public class AutoRed extends LinearOpMode {
         angles   = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
         heading = angles.firstAngle;
 
+        brick.activate();
+
+
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
 
@@ -56,7 +61,7 @@ public class AutoRed extends LinearOpMode {
         while (opModeIsActive()) {
             // Find Brick
             // move toward brick
-            turnInPlace(brick.angle);
+            turnInPlace((int) brick.angle);
             wheels.drive(maxSpeed);
             while (brick.distance < n) {}
             wheels.stopDriving();
