@@ -29,6 +29,8 @@ public class DriverController2 extends LinearOpMode {
     private Wheels2 wheels;
     private BrickLoader2 brickLoader;
 
+    private Servo grabber;
+
     private ElapsedTime runtime = new ElapsedTime();
 
     public void runOpMode() {
@@ -46,11 +48,14 @@ public class DriverController2 extends LinearOpMode {
         elbowServo  = hardwareMap.get(CRServo.class, "elbow");
         shoulderRotate  = hardwareMap.get(CRServo.class, "shoulderRotate");
         hand = hardwareMap.get(Servo.class, "hand");
+        grabber = hardwareMap.get(Servo.class, "graber");
+
 
         claw = new Claw2(hand, wristServo, elbowServo, shoulderRotate, shoulderElevate);
         wheels = new Wheels2(leftMotor, rightMotor);
         wheels.start();
         brickLoader = new BrickLoader2(brickLoaderMotor);
+        boolean grabberOpen = false;
 
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
@@ -58,24 +63,32 @@ public class DriverController2 extends LinearOpMode {
 
         // run until the end of the match (driver presses STOP)
         while (opModeIsActive()) {
-            if (gamepad1.right_trigger > 0.3) {
-                brickLoader.setSpeed(-gamepad1.right_trigger);
-            }
-            if (gamepad1.left_trigger < 0.7) {
-                brickLoader.setSpeed(gamepad2.left_trigger);
-            } else {
-                brickLoader.setSpeed(gamepad1.left_trigger);
-            }
+//            if (gamepad1.right_trigger > 0.3) {
+//                brickLoader.setSpeed(-gamepad1.right_trigger);
+//            }
+//            if (gamepad1.left_trigger < 0.7) {
+//                brickLoader.setSpeed(gamepad2.left_trigger);
+//            } else {
+//                brickLoader.setSpeed(gamepad1.left_trigger);
+//            }
 
 
             wheels.rightMotor.setPower(gamepad1.right_stick_y);
             wheels.leftMotor.setPower(gamepad1.left_stick_y);
 
-            claw.shoulderElevate.setPower(-gamepad2.left_stick_y);
-            claw.elbow.setPower(gamepad2.right_stick_y);//2
-            claw.shoulderRotate.setPower(gamepad2.left_stick_x);//0
-            claw.wrist.setPower(gamepad2.right_stick_x);//1
-            claw.setHandPosition(gamepad2.right_trigger);//3
+            if (gamepad1.right_trigger != 0) {
+                if (grabberOpen) {
+                    grabber.setPosition(0);
+                } else {
+                    grabber.setPosition(1.0 / 6);
+                }
+            }
+
+//            claw.shoulderElevate.setPower(-gamepad2.left_stick_y);
+//            claw.elbow.setPower(gamepad2.right_stick_y);//2
+//            claw.shoulderRotate.setPower(gamepad2.left_stick_x);//0
+//            claw.wrist.setPower(gamepad2.right_stick_x);//1
+//            claw.setHandPosition(gamepad2.right_trigger);//3
         }
     }
 
