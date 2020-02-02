@@ -17,6 +17,10 @@ public class Wheels2 extends Thread{
     private double turnTurnRadius;
     private boolean turn;
 
+    public static enum Direction {
+        RIGHT, LEFT;
+    }
+
     public Wheels2(DcMotor lm, DcMotor rm){
         leftMotor = lm;
         rightMotor = rm;
@@ -61,6 +65,21 @@ public class Wheels2 extends Thread{
         double innerSpeed = outerSpeed/(1+width/turnRadius);
         (!turnDirection ? leftMotor : rightMotor).setPower(innerSpeed/(22.5 * Math.PI)); //divide by max speed in order to get number in range [-1.0, 1.0]
         (turnDirection ? leftMotor : rightMotor).setPower(outerSpeed/(22.5 * Math.PI)); //divide by max speed in order to get number in range [-1.0, 1.0]
+    }
+
+    public void turn(double speed, Direction direction) {
+        if (direction == Direction.RIGHT) {
+            leftMotor.setPower(speed);
+            rightMotor.setPower(-speed);
+        } else {
+            leftMotor.setPower(-speed);
+            rightMotor.setPower(speed);
+        }
+    }
+
+    public void turn(double speed) {
+        leftMotor.setPower(-speed);
+        rightMotor.setPower(speed);
     }
 
     public void run(){
